@@ -11,6 +11,7 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 ### Students
 
 * Nicholas Soto, soto0056@umn.edu
+* Tyler Chan, chen7751@umn.edu
 * ...
 
 
