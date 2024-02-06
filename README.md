@@ -41,7 +41,7 @@ along with a very brief caption:**
 
 ## Mock-up 
 
-Moqups link: [view](https://app.moqups.com/sQZaqcg6E7HeP8DRyKPD55Sv3hrhamhK/view/page/ab64baf13)
+Moqups link: [view](https://app.moqups.com/8SGlpTOnihgzNLST2OkPhaSrfosRTLtE/view/page/a96d6f2a6)
 
 ## External Dependencies
 
