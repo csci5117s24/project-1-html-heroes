@@ -43,6 +43,8 @@ along with a very brief caption:**
 
 Moqups link: [view](https://app.moqups.com/8SGlpTOnihgzNLST2OkPhaSrfosRTLtE/view/page/a96d6f2a6)
 
+Please try this link more than one time since at the first time you might not successfully load this link. The access of this link should let you view our mock-up. If it does not work, please look at mock-up folder.
+
 ## External Dependencies
 
 **Document integrations with 3rd Party code or services here.
