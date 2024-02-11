@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Event Finder</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/index.css">
+        <script src="/static/index.js"></script>
+    </head>
+    <body>
+        <div class="pure-g">
+            <div class="pure-u-1-4"><p>Event Finder</p></div>
+            <div class="pure-u-1-2 pure-button-group" role="group">
+                <button class="pure-button header-button">Find Events</button>
+                <button class="pure-button header-button">Create Event</button>
+                <button class="pure-button header-button">My Schedule</button>
+            </div>
+            <div class="pure-u-1-8"><p>Search</p></div>
+            <div class="pure-u-1-8"><p>Sign in</p></div>
+        </div>
+        <div><p>Find events/</p></div>
+        <div class="pure-button-group category-div" role="group">
+            <button class="pure-button pure-button-active category-button" id="upcoming">Upcoming</button>
+            <button class="pure-button category-button" id="week">Week</button>
+            <button class="pure-button category-button" id="month">Month</button>
+            <button class="pure-button category-button" id="all-events">All Events</button>
+        </div>
+        <div id="events">
+            <p>Upcoming Events</p>
+        </div>
+    </body>
+ </html>
