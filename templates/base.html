@@ -1,0 +1,15 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - EventFinder</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+<script src="/static/index.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+{% block scripts %}{% endblock %}
+
+<section class="">
+  {% include "navbar.html" %}
+
+  <div class="">
+    {% block content %}{% endblock %}
+  </div>
+</section>

@@ -1,14 +1,8 @@
-<!DOCTYPE html>
+ {% extends 'base.html' %}
 
-<html lang="en">
-    <head>
-        <title>Event Finder</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
-        <link rel="stylesheet" href="/static/index.css">
-        <script src="/static/index.js"></script>
-    </head>
-    <body>
-        {% include "navbar.html" %}
+ {% block title %}Home{% endblock %}
+
+{% block content %}
         <div><p>Find events/</p></div>
         <div class="category-div">
             <div class="pure-button-group" role="group">
@@ -20,5 +14,4 @@
             <div id="events">
             </div>
         </div>
-    </body>
- </html>
+{% endblock %}
