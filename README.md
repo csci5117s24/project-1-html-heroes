@@ -5,8 +5,8 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 ## App Info:
 
 * Team Name: HTML Heroes
-* App Name: TODO
-* App Link: <https://TODO.com/>
+* App Name: EventFinder
+* App Link: https://html-heros-project1.onrender.com/
 
 ### Students
 
