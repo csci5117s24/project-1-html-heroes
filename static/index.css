@@ -3,10 +3,11 @@
 }
 
 .header-button {
-    position: relative;
+    /* position: relative; */
     width: 33%;
     height: 100%;
     background-color: white;
+    text-align: center;
 }
 
 .category-div {
