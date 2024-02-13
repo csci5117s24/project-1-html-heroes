@@ -37,10 +37,49 @@
     height: 100%;
 }
 
-.pure-g > div {
-    box-sizing: border-box;
+.image-div{
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.1) 40%), url("Elon-Musk.jpeg");;
+    background-size: cover; /* Cover the entire area of the div */
+    background-position: center; 
+    color: white; /* Text color */
+    text-align: left; /* Center the text */
+    height: 200px; /* Set a height */
+    display: flex;
+    align-items: center; /* Center text vertically */
+    justify-content: left; /* Center text horizontally */
+    /* width: 90%; */
+    height: 12cm;
+    font-size: 3.8cm;
+    text-shadow: 2px 2px 10px #000000;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.l-box {
-    padding: 1em;
+.content-block{
+    margin-left: 1cm;
+    margin-right: 1cm;
 }
+
+.event-info-div{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.delimiter {
+    border-top: 2px solid #333; /* Create a top border acting as a line */
+    width: 100%; /* Make the line span the full width of its container */
+    margin: 20px 0; /* Add some space above and below the line */
+  }
+
+  .review-block, 
+  .date-block,
+  .location-block{
+    display: flex;
+  }
+
+  .review-block{
+    margin-left: 1cm;
+    margin-right: 1cm;
+  }

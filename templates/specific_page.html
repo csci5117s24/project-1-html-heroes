@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Event Finder</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/index.css">
+        <script src="/static/index.js"></script>
+    </head>
+    <body>
+        <div class="pure-g">
+            <div class="pure-u-1-4"><p>Event Finder</p></div>
+            <div class="pure-u-1-2 pure-button-group" role="group">
+                <button class="pure-button header-button">Find Events</button>
+                <button class="pure-button header-button">Create Event</button>
+                <button class="pure-button header-button">My Schedule</button>
+            </div>
+            <div class="pure-u-1-8"><p>Search</p></div>
+            <div class="pure-u-1-8"><p>Sign in</p></div>
+        </div>
+        <div class="content-block">
+            <div class="nav-div"><p>Find events/</p></div>
+            <div class="image-div">
+                Tech Talk with Elon Mask
+            </div>
+            <div class="event-info-div">
+                <div class="location-Date-block">
+                    <div class="location-block">
+                        <div class="location-detail">
+                            <h2>Location</h2>
+                            <p id="location">Bruininks Hall Room 100, 222 Pleasant St SE, Minneapolis, MN 55455</p>
+                        </div>
+                        <div class="google-map">
+                            <button class="pure-button">Views on Google Maps</button>
+                            <div class="map-display"></div>
+                        </div>
+                    </div>
+                    <div class="date-block">
+                        <div class="date-detail">
+                            <h2>Date and Time</h2>
+                            <p id="date">Starts on Friday, February 16 · 7pm CST. Doors at 6pm</p>
+                        </div>
+                        <div class="google-calender">
+                            <button class="pure-button">Add to Google Calender</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-block">
+                    <h2>About</h2>
+                    <p id="description">In Elon Musk's tech talk on artificial intelligence, 
+                        he likely explores the dual-edged nature of AI, highlighting its potential to revolutionize industries, 
+                        enhance human capabilities, and solve complex global issues.
+                        Musk may caution against the unregulated advancement of AI, 
+                        emphasizing the need for ethical frameworks and oversight to prevent potential risks. 
+                        He could discuss his involvement with OpenAI, a research company aiming to ensure that AI benefits all of humanity, 
+                        and share insights into AI's future, including its impact on the workforce, society, and safety. 
+                        The talk would reflect Musk's vision for a balanced approach to AI development, advocating for innovation coupled with responsibility.</p>
+                    <button class="pure-button">Add to My Schedule</button>
+                </div>
+            </div>
+        </div>
+        <div class="delimiter"></div>
+        <div class="review-block">
+            <div class="review-detail-block">
+                <h2>Reviews</h2>
+                <div class="rating"></div>
+                <div class="author">Tyler</div>
+                <div class="review-description">
+                    Elon Musk's talk was mind-blowing! He showed us how AI is changing the game in software engineering, making everything from coding to solving complex problems easier and more efficient. 
+                    He really got me thinking about how I can use AI in my own projects. It's not just about the tech; it's about pushing boundaries and coming up with cool new ideas
+                </div>
+            </div>
+            <div class="review-button">
+                <button class="pure-button" onclick="TriggerReview()">Write a review</button>
+            </div>
+        </div>
+    </body>
+ </html>

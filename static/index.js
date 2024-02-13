@@ -66,3 +66,21 @@ function createEvent(clubName, date, location, eventName, eventDesc) {
     newEvent.getElementsByClassName("event-add")[0].innerHTML = "<p>Add event button</p>";
     return newEvent.documentElement.innerHTML;
 }
+
+// Used to trigger the form for review
+function TriggerReview() {
+    var checkbox = document.getElementById("q4_5");
+    console.log(checkbox)
+    var textarea = document.getElementById("conditional_1");
+    console.log(checkbox)
+    textarea.style.display = checkbox.checked ? "block" : "none";
+}
+
+// Used to trigger the form for review
+function TriggerReview() {
+    var checkbox = document.getElementById("q4_5");
+    console.log(checkbox)
+    var textarea = document.getElementById("conditional_1");
+    console.log(checkbox)
+    textarea.style.display = checkbox.checked ? "block" : "none";
+}

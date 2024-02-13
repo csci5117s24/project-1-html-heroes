@@ -1,13 +1,27 @@
-from flask import Flask, render_template, url_for
+from os import environ as env
+from flask import Flask, render_template, url_for, session, redirect, request
+from dotenv import load_dotenv, find_dotenv
+from urllib.parse import quote_plus, urlencode
+from authlib.integrations.flask_client import OAuth
 import database
 
 app = Flask(__name__)
 with app.app_context():
     database.setup()
 
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/specific_page')
+def render_specific_page():
+    return render_template('specific_page.html')
 
 @app.route('/create_event')
 def create_event():
