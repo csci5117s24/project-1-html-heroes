@@ -19,6 +19,7 @@ if ENV_FILE:
 def index():
     return render_template('index.html')
 
+# Specific_page is not complete yet
 @app.route('/specific_page')
 def render_specific_page():
     return render_template('specific_page.html')
