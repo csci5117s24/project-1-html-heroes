@@ -52,6 +52,15 @@ def add_event(event_type, event_name, event_location, event_date, event_descript
         cur.execute("INSERT INTO event (event_type, event_name, event_location, event_date, event_description, event_image_url) values (%s, %s, %s, %s, %s, %s)", (event_type, event_name, event_location, event_date, event_description, event_image_url))
         print(f"Added event: {event_type}, {event_name}, {event_location}, {event_date}, {event_description}, {event_image_url}")
 
+def add_user(user_id, user_name, user_email):
+    with get_db_cursor(True) as cur:
+        cur.execute("INSERT INTO users (user_id, user_name, user_email) values (%s, %s, %s)", (user_id, user_name, user_email))
+        print(f"Added user: {user_id}, {user_name}, {user_email}")
+
+def add_user_event(user_id, event_id):
+    with get_db_cursor(True) as cur:
+        cur.execute("INSERT INTO my_events (user_id, event_id) values (%s, %s)", (user_id, event_id))
+        print(f"Added user event: {user_id}, {event_id}")
 
 def get_events(page = 0, events_per_page = 10):
     ''' note -- result can be used as list of dictionaries'''
