@@ -12,7 +12,9 @@ create table event (
 create table users (
     user_id text primary key,
     user_name text not null,
-    user_email text not null
+    user_email text not null,
+    user_role text default 'user',
+    user_avatar text null
 )
 
 create table my_events (

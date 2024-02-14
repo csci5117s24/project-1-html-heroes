@@ -104,6 +104,13 @@ def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
     print(token)
+    
+    # check if user has account from the database
+    user = database.get_user(token['userinfo']['sid']).get_json()
+    if user['user'] == []:
+        # add user to the database
+        auth_info = token['userinfo']
+        database.add_user(auth_info['sid'], auth_info['name'], auth_info['email'], auth_info['picture'])
     return redirect("/")
 
 @app.route("/logout")

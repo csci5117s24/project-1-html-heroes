@@ -52,10 +52,10 @@ def add_event(event_type, event_name, event_location, event_date, event_descript
         cur.execute("INSERT INTO event (event_type, event_name, event_location, event_date, event_description, event_image_url) values (%s, %s, %s, %s, %s, %s)", (event_type, event_name, event_location, event_date, event_description, event_image_url))
         print(f"Added event: {event_type}, {event_name}, {event_location}, {event_date}, {event_description}, {event_image_url}")
 
-def add_user(user_id, user_name, user_email):
+def add_user(user_id, user_name, user_email, user_avatar):
     with get_db_cursor(True) as cur:
-        cur.execute("INSERT INTO users (user_id, user_name, user_email) values (%s, %s, %s)", (user_id, user_name, user_email))
-        print(f"Added user: {user_id}, {user_name}, {user_email}")
+        cur.execute("INSERT INTO users (user_id, user_name, user_email, user_avatar) values (%s, %s, %s, %s)", (user_id, user_name, user_email, user_avatar))
+        print(f"Added user: {user_id}, {user_name}, {user_email}, {user_avatar}")
 
 def add_user_event(user_id, event_id):
     with get_db_cursor(True) as cur:
@@ -82,3 +82,8 @@ def get_user_events(user_id):
         event_ids = [event['event_id'] for event in user_events]
         cur.execute("select * from event where event_id in %s", (tuple(event_ids),))
         return jsonify({'events': [dict(x) for x in cur.fetchall()]})
+
+def get_user(user_id):
+    with get_db_cursor() as cur:
+        cur.execute("select * from users where user_id = %s", (user_id,))
+        return jsonify({'user': [dict(x) for x in cur.fetchall()]})
