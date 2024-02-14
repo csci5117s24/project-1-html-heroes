@@ -127,3 +127,7 @@ def private():
         return "private", 403
     else:
         return render_template('hello.html', name="private!")
+    
+@app.route('/api/future')
+def test():
+    return database.get_month_events()
