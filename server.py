@@ -1,3 +1,4 @@
+import json
 from os import environ as env
 from flask import Flask, render_template, url_for, session, redirect, request
 from dotenv import load_dotenv, find_dotenv
@@ -5,15 +6,15 @@ from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 import database
 
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+
 app = Flask(__name__)
 app.secret_key = env.get("APP_SECRET_KEY")
 
 with app.app_context():
     database.setup()
-
-ENV_FILE = find_dotenv()
-if ENV_FILE:
-    load_dotenv(ENV_FILE)
 
 oauth = OAuth(app)
 
@@ -30,7 +31,7 @@ oauth.register(
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', pretty=json.dumps(session.get('user'), indent=4))
 
 # Specific_page is not complete yet
 @app.route('/specific_page')
@@ -91,6 +92,7 @@ def api_event(event_id):
 def api_user_events(user_id):
     return database.get_user_events(user_id)
 
+# Auth0 routes
 @app.route("/login")
 def login():
     return oauth.auth0.authorize_redirect(
@@ -101,6 +103,7 @@ def login():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
+    print(token)
     return redirect("/")
 
 @app.route("/logout")
@@ -117,3 +120,10 @@ def logout():
             quote_via=quote_plus,
         )
     )
+
+@app.route('/private')
+def private():
+    if session.get("user") is None:
+        return "private", 403
+    else:
+        return render_template('hello.html', name="private!")
