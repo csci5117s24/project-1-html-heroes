@@ -2,20 +2,23 @@
 window.onload = function() {
     stars = document.querySelectorAll(".ratings span")
     products = document.querySelectorAll(".ratings")
-    ratings()
+    ratings(stars, products)
+    fetch(products)
 }
 
 
-function TriggerReview() {
-    var checkbox = document.getElementById("q4_5");
-    console.log(checkbox)
-    var textarea = document.getElementById("conditional_1");
-    console.log(checkbox)
-    textarea.style.display = checkbox.checked ? "block" : "none";
-}
+// function TriggerReview() {
+//     var checkbox = document.getElementById("q4_5");
+//     console.log(checkbox)
+//     var textarea = document.getElementById("conditional_1");
+//     console.log(checkbox)
+//     textarea.style.display = checkbox.checked ? "block" : "none";
+// }
+
+
 
 //ratings system
-function ratings(){
+function ratings(stars, products){
     ////test
     // console.log(stars)
     // console.log(products)
@@ -50,23 +53,23 @@ function ratings(){
             ratings.push(data);
             
             // store rating locally
-            localStorage.setItem("rating", JSON.stringify(ratings))
-
-
-            
+            localStorage.setItem("rating", JSON.stringify(ratings))            
         })
     }
 }
 
-if(localStorage.getItem("rating")){
-    ratings = JSON.parse(localStorage.getItem("rating"))
-    for(let rating of ratings){
-        for(let product of products){
-            if(rating['product-id'] == product.dataset.productid){
-                let reversedStars = Array.from(product.children).reverse()
-                let index = parseInt(rating["stars"]) - 1;
-                reversedStars[index].setAttribute("data-clicked","true")
+function fetch(products){
+    if(localStorage.getItem("rating")){
+        ratings = JSON.parse(localStorage.getItem("rating"))
+        for(let rating of ratings){
+            for(let product of products){
+                if(rating['product-id'] == product.dataset.productid){
+                    let reversedStars = Array.from(product.children).reverse()
+                    let index = parseInt(rating["stars"]) - 1;
+                    reversedStars[index].setAttribute("data-clicked","true")
+                }
             }
         }
     }
 }
+
