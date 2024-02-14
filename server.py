@@ -72,7 +72,11 @@ def event(event_id):
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    user = session.get("user")
+    my_events = []
+    if not user == None:
+        my_events = database.get_user_events(user['sub']).get_json()['events']
+    return render_template('profile.html', events=my_events)
 
 @app.route('/find_events')
 def find_events():
@@ -102,15 +106,13 @@ def login():
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
     token = oauth.auth0.authorize_access_token()
-    session["user"] = token
-    print(token)
+    session["user"] = token['userinfo']
     
-    # check if user has account from the database
-    user = database.get_user(token['userinfo']['sid']).get_json()
+    user = database.get_user(token['userinfo']['sub']).get_json()
     if user['user'] == []:
         # add user to the database
         auth_info = token['userinfo']
-        database.add_user(auth_info['sid'], auth_info['name'], auth_info['email'], auth_info['picture'])
+        database.add_user(auth_info['sub'], auth_info['name'], auth_info['email'], auth_info['picture'])
     return redirect("/")
 
 @app.route("/logout")
