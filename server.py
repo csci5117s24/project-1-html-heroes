@@ -60,7 +60,20 @@ def create_event():
         print(form_data)
         database.add_event(event_type, event_name, event_location, event_date, event_description, event_image_url)
         return render_template('profile.html')
-    return render_template('create_event.html')
+    if session.get('user') is None:
+        return """
+        <html>
+            <head><title>Sign In Required</title></head>
+            <body>
+            <script>
+                alert('Please sign in to create a event.');
+                window.location = '/';
+            </script>
+            </body>
+        </html>
+        """
+    else:
+        return render_template('create_event.html')
 
 @app.route('/event/<int:event_id>')
 def event(event_id):
@@ -72,7 +85,20 @@ def event(event_id):
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    if session.get('user') is None:
+        return """
+        <html>
+            <head><title>Sign In Required</title></head>
+            <body>
+            <script>
+                alert('Please sign in to view your profile.');
+                window.location = '/';
+            </script>
+            </body>
+        </html>
+        """
+    else:
+        return render_template('profile.html')
 
 @app.route('/find_events')
 def find_events():
@@ -127,10 +153,3 @@ def logout():
             quote_via=quote_plus,
         )
     )
-
-@app.route('/private')
-def private():
-    if session.get("user") is None:
-        return "private", 403
-    else:
-        return render_template('hello.html', name="private!")
