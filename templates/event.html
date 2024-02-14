@@ -3,5 +3,16 @@
 {% block title %}Event{% endblock %}
 
 {% block content %}
-<h1>Event Id: {{ event_id }}</h1>
+<h1>Event: {{ event.event_name }}</h1>
+
+<div class="card container">
+    <h2>{{ event.event_name }}</h2>
+    <p>{{ event.event_type }}</p>
+    <p>{{ event.event_location }}</p>
+    <p>{{ event.event_date }}</p>
+    <p>{{ event.event_description }}</p>
+    {% if event.event_image_url %}
+        <img src="{{ event.event_image_url }}" alt="Event Image" />
+    {% endif %}
+</div>
 {% endblock %}

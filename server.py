@@ -23,13 +23,37 @@ def index():
 def render_specific_page():
     return render_template('specific_page.html')
 
-@app.route('/create_event')
+@app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
+    if request.method == 'POST':
+        event_type = request.form['event_type']
+        event_name = request.form['event_name']
+        event_location = request.form['event_location']
+        event_date = request.form['event_date']
+        event_description = request.form['event_description']
+        event_image_url = request.form['event_image_url']
+
+        form_data = {
+            "event_type": event_type,
+            "event_name": event_name,
+            "event_location": event_location,
+            "event_date": event_date,
+            "event_description": event_description,
+            "event_image_url": event_image_url
+        }
+
+        print(form_data)
+        database.add_event(event_type, event_name, event_location, event_date, event_description, event_image_url)
+        return render_template('profile.html')
     return render_template('create_event.html')
 
 @app.route('/event/<int:event_id>')
 def event(event_id):
-    return render_template('event.html', event_id=event_id)
+    event = database.get_event(event_id).get_json()['event']
+    if event:
+        return render_template('event.html', event=event[0])
+    else:
+        return render_template('index.html')
 
 @app.route('/profile')
 def profile():
@@ -37,7 +61,8 @@ def profile():
 
 @app.route('/find_events')
 def find_events():
-    return render_template('find_events.html')
+    events = database.get_events(0, 10).get_json()['events']
+    return render_template('find_events.html', events=events)
 
 ### API Endpoints
 @app.route('/api/events')
