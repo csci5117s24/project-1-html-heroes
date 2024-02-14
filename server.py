@@ -33,10 +33,9 @@ oauth.register(
 def index():
     return render_template('index.html', pretty=json.dumps(session.get('user'), indent=4))
 
-# Specific_page is not complete yet
-@app.route('/specific_page')
-def render_specific_page():
-    return render_template('specific_page.html')
+# @app.route('/specific_page')
+# def render_specific_page():
+#     return render_template('specific_page.html')
 
 @app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
@@ -78,8 +77,9 @@ def create_event():
 @app.route('/event/<int:event_id>')
 def event(event_id):
     event = database.get_event(event_id).get_json()['event']
+    print(event)
     if event:
-        return render_template('event.html', event=event[0])
+        return render_template('specific_page.html', event=event[0])
     else:
         return render_template('index.html')
 
