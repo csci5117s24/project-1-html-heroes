@@ -5,7 +5,7 @@
         <title>Event Finder</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
         <link rel="stylesheet" href="/static/index.css">
-        <script src="/static/index.js"></script>
+        <script src="/static/specific-page.js"></script>
     </head>
     <body>
         <div class="pure-g">
@@ -24,28 +24,23 @@
                 Tech Talk with Elon Mask
             </div>
             <div class="event-info-div">
-                <div class="location-Date-block">
+                <div class="location-Date-block pure-u-1-2">
                     <div class="location-block">
                         <div class="location-detail">
                             <h2>Location</h2>
                             <p id="location">Bruininks Hall Room 100, 222 Pleasant St SE, Minneapolis, MN 55455</p>
-                        </div>
-                        <div class="google-map">
                             <button class="pure-button">Views on Google Maps</button>
-                            <div class="map-display"></div>
                         </div>
                     </div>
-                    <div class="date-block">
+                    <div class="date-block pure-u-1-2">
                         <div class="date-detail">
                             <h2>Date and Time</h2>
                             <p id="date">Starts on Friday, February 16 · 7pm CST. Doors at 6pm</p>
-                        </div>
-                        <div class="google-calender">
                             <button class="pure-button">Add to Google Calender</button>
                         </div>
                     </div>
                 </div>
-                <div class="about-block">
+                <div class="about-block pure-u-1-2">
                     <h2>About</h2>
                     <p id="description">In Elon Musk's tech talk on artificial intelligence, 
                         he likely explores the dual-edged nature of AI, highlighting its potential to revolutionize industries, 
@@ -61,13 +56,23 @@
         </div>
         <div class="delimiter"></div>
         <div class="review-block">
-            <div class="review-detail-block">
+            <div class="review-block-1">
                 <h2>Reviews</h2>
-                <div class="rating"></div>
-                <div class="author">Tyler</div>
-                <div class="review-description">
-                    Elon Musk's talk was mind-blowing! He showed us how AI is changing the game in software engineering, making everything from coding to solving complex problems easier and more efficient. 
-                    He really got me thinking about how I can use AI in my own projects. It's not just about the tech; it's about pushing boundaries and coming up with cool new ideas
+                <div class="review-block-1">
+                    <div class="author"><p>By Bob</p></div>
+                        <div class="ratings-wrapper">
+                            <div data-productid="39" class="ratings">
+                                <span data-rating="5">&#9733;</span>
+                                <span data-rating="4">&#9733;</span>
+                                <span data-rating="3">&#9733;</span>
+                                <span data-rating="2">&#9733;</span>
+                                <span data-rating="1">&#9733;</span>
+                            </div>
+                        </div>
+                    <div class="review-description">
+                        Elon Musk's talk was mind-blowing! He showed us how AI is changing the game in software engineering, making everything from coding to solving complex problems easier and more efficient. 
+                        He really got me thinking about how I can use AI in my own projects. It's not just about the tech; it's about pushing boundaries and coming up with cool new ideas
+                    </div>
                 </div>
             </div>
             <div class="review-button">

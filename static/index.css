@@ -37,6 +37,7 @@
   height: 100%;
 }
 
+/* This is used to beautify the image of an event */
 .image-div {
   background-image: linear-gradient(
       to top,
@@ -44,14 +45,14 @@
       rgba(0, 0, 0, 0.1) 40%
     ),
     url("Elon-Musk.jpeg");
-  background-size: cover; /* Cover the entire area of the div */
+  background-size: cover; 
   background-position: center;
-  color: white; /* Text color */
-  text-align: left; /* Center the text */
-  height: 200px; /* Set a height */
+  color: white;
+  text-align: left; 
+  height: 200px; 
   display: flex;
-  align-items: center; /* Center text vertically */
-  justify-content: left; /* Center text horizontally */
+  align-items: center; 
+  justify-content: left; 
   /* width: 90%; */
   height: 12cm;
   font-size: 3.8cm;
@@ -60,10 +61,10 @@
   margin-right: auto;
 }
 
-.content-block {
+/* .content-block {
   margin-left: 1cm;
   margin-right: 1cm;
-}
+} */
 
 .event-info-div {
   display: flex;
@@ -73,9 +74,9 @@
 }
 
 .delimiter {
-  border-top: 2px solid #333; /* Create a top border acting as a line */
-  width: 100%; /* Make the line span the full width of its container */
-  margin: 20px 0; /* Add some space above and below the line */
+  border-top: 2px solid #333;
+  width: 100%; 
+  margin: 20px 0; 
 }
 
 .review-block,
@@ -85,8 +86,44 @@
 }
 
 .review-block {
-  margin-left: 1cm;
-  margin-right: 1cm;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 10%;
+  }
+
+.rating{
+    margin-bottom: 0.3cm;
+}
+
+.ratings-wrapper{
+    border: thin solid #948d8d;
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+.ratings{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.ratings span{
+    cursor: pointer;
+    transition: color .1s, transform .1s;
+    font-size: 20px;
+    color: rgb(170, 174, 174);
+}
+
+.ratings span:hover{
+    color: black;
+}
+
+.ratings span:hover ~ span{
+    color:black
+}
+
+.ratings span[data-clicked]{
+    color:black
 }
 
 /* card code: https://www.w3schools.com/howto/howto_css_cards.asp */
