@@ -5,6 +5,7 @@ from dotenv import load_dotenv, find_dotenv
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 import database
+from database import get_db_cursor
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -108,6 +109,14 @@ def api_event(event_id):
 @app.route('/api/users/<user_id>/events')
 def api_user_events(user_id):
     return database.get_user_events(user_id)
+
+@app.route('/search')
+def search():
+    query = request.args.get('query', '')
+    with get_db_cursor() as cur:
+        cur.execute("SELECT * FROM event WHERE event_name ILIKE %s ORDER BY event_date DESC", (f'%{query}%',))
+        events = cur.fetchall() or []
+    return render_template('search_results.html', events=events)
 
 # Auth0 routes
 @app.route("/login")
