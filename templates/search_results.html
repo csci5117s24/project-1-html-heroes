@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Search Results</h1>
+{% for event in events %}
+<a href="{{ url_for('event', event_id=event.event_id) }}">
+  <div class="card container">
+    <h2>{{ event.event_name }}</h2>
+  </div>
+</a>
+{% else %}
+<p>No events found.</p>
+{% endfor %} {% endblock %}
