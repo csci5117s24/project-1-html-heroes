@@ -85,22 +85,22 @@ def get_user_events(user_id):
     
 
 # TODO: once duration is added, change from event_date to ending time
-def get_future_events():
+def get_all_future_events():
     with get_db_cursor() as cur:
         cur.execute("select * from event where event_date > current_timestamp")
         return jsonify({'events': [dict(x) for x in cur.fetchall()]})
     
 def get_upcoming_events():
     with get_db_cursor() as cur:
-        cur.execute("select * from event where event_date < (current_timestamp + (2 * interval '1 day'))")
+        cur.execute("select * from event where event_date < (current_timestamp + (2 * interval '1 day')) and event_date > current_timestamp")
         return jsonify({'events': [dict(x) for x in cur.fetchall()]})
     
 def get_week_events():
     with get_db_cursor() as cur:
-        cur.execute("select * from event where event_date < (current_timestamp + (7 * interval '1 day'))")
+        cur.execute("select * from event where event_date < (current_timestamp + (7 * interval '1 day')) and event_date > current_timestamp")
         return jsonify({'events': [dict(x) for x in cur.fetchall()]})
     
 def get_month_events():
     with get_db_cursor() as cur:
-        cur.execute("select * from event where event_date < (current_timestamp + (1 * interval '1 month'))")
+        cur.execute("select * from event where event_date < (current_timestamp + (1 * interval '1 month')) and event_date > current_timestamp")
         return jsonify({'events': [dict(x) for x in cur.fetchall()]})

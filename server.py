@@ -92,6 +92,22 @@ def api_event(event_id):
 def api_user_events(user_id):
     return database.get_user_events(user_id)
 
+@app.route('/api/events/future')
+def api_future_events():
+    return database.get_all_future_events()
+
+@app.route('/api/events/upcoming')
+def api_upcoming_events():
+    return database.get_upcoming_events()
+
+@app.route('/api/events/week')
+def api_week_events():
+    return database.get_week_events()
+
+@app.route('/api/events/month')
+def api_month_events():
+    return database.get_month_events()
+
 # Auth0 routes
 @app.route("/login")
 def login():
@@ -127,7 +143,3 @@ def private():
         return "private", 403
     else:
         return render_template('hello.html', name="private!")
-    
-@app.route('/api/future')
-def test():
-    return database.get_month_events()
