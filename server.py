@@ -134,14 +134,6 @@ def search():
         events = cur.fetchall() or []
     return render_template('search_results.html', events=events)
 
-@app.route('/search')
-def search():
-    query = request.args.get('query', '')
-    with get_db_cursor() as cur:
-        cur.execute("SELECT * FROM event WHERE event_name ILIKE %s ORDER BY event_date DESC", (f'%{query}%',))
-        events = cur.fetchall() or []
-    return render_template('search_results.html', events=events)
-
 # Auth0 routes
 @app.route("/login")
 def login():

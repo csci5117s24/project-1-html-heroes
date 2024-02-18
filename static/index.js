@@ -4,10 +4,10 @@ window.onload = function() {
     monthButton = document.getElementById("month");
     allEventsButton = document.getElementById("all-events");
     
-    upcomingButton.addEventListener("click", getUpcomingEvents);
-    weekButton.addEventListener("click", getWeekEvents);
-    monthButton.addEventListener("click", getMonthEvents);
-    allEventsButton.addEventListener("click", getAllEvents);
+    upcomingButton.addEventListener("click", () => getEvents("upcoming", upcomingButton));
+    weekButton.addEventListener("click", () => getEvents("week", weekButton));
+    monthButton.addEventListener("click", () => getEvents("month", monthButton));
+    allEventsButton.addEventListener("click", () => getEvents("future", allEventsButton));
     document.getElementById("upcoming").click();
 }
 
@@ -19,53 +19,16 @@ const baseEventHtml = "<a style=\"color: inherit; text-decoration: none;\">" +
 
 const rootUrl = "http://localhost:5000";
 
-async function getUpcomingEvents() {
-    const response = await fetch(rootUrl + "/api/events/upcoming");
+async function getEvents(type, activeButton) {
+    const response = await fetch(rootUrl + "/api/events/" + type);
     const events = (await response.json()).events;
-    console.log(events)
-    changeActiveButton(this);
+    changeActiveButton(activeButton);
     const upcomingEvents = [];
     for (let i = 0; i < events.length; i++) {
         const newEvent = createEvent(events[i]);
         upcomingEvents.push(newEvent);
     }
     changeEvents(upcomingEvents);
-}
-
-async function getWeekEvents() {
-    const response = await fetch(rootUrl + "/api/events/week");
-    const events = (await response.json()).events;
-    changeActiveButton(this);
-    const weekEvents = [];
-    for (let i = 0; i < events.length; i++) {
-        const newEvent = createEvent(events[i]);
-        weekEvents.push(newEvent);
-    }
-    changeEvents(weekEvents);
-}
-
-async function getMonthEvents() {
-    const response = await fetch(rootUrl + "/api/events/month");
-    const events = (await response.json()).events;
-    changeActiveButton(this);
-    const monthEvents = [];
-    for (let i = 0; i < events.length; i++) {
-        const newEvent = createEvent(events[i]);
-        monthEvents.push(newEvent);
-    }
-    changeEvents(monthEvents);
-}
-
-async function getAllEvents() {
-    const response = await fetch(rootUrl + "/api/events/future");
-    const events = (await response.json()).events;
-    changeActiveButton(this);
-    const allEvents = [];
-    for (let i = 0; i < events.length; i++) {
-        const newEvent = createEvent(events[i]);
-        allEvents.push(newEvent);
-    }
-    changeEvents(allEvents);
 }
 
 function changeActiveButton(newActive) {
@@ -85,16 +48,10 @@ function changeEvents(newEvents) {
 function createEvent(eventData) {
     const parser = new DOMParser();
     const newEvent = parser.parseFromString(baseEventHtml, 'text/html');
-    const eventText = parser.parseFromString(eventData.event_type + " - " + eventData.event_date + "<br>" + eventData.event_location + "<br>" + eventData.event_name + "<br>" + eventData.event_description, 'text/html');
+    const eventText = eventData.event_type + " - " + eventData.event_date + "<br>" + eventData.event_location + "<br>" + eventData.event_name + "<br>" + eventData.event_description;
     newEvent.getElementsByClassName("event-image")[0].innerHTML = "<img src=" + eventData.event_image_url + ">";
-    newEvent.getElementsByClassName("event-text")[0].innerHTML = eventText.documentElement.innerHTML;
+    newEvent.getElementsByClassName("event-text")[0].innerHTML = eventText;
     newEvent.getElementsByClassName("event-add")[0].innerHTML = "<p>Add event button</p>";
     newEvent.querySelector("a").setAttribute("href", rootUrl + "/event/" + eventData.event_id);
     return newEvent.documentElement.innerHTML;
 }
-
-
-
-
-
-

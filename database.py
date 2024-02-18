@@ -81,8 +81,8 @@ def get_user_events(user_id):
         user_events = [dict(x) for x in cur.fetchall()]
         event_ids = [event['event_id'] for event in user_events]
         if not event_ids == []:
-            cur.execute("select * from event where event_id in %s", (tuple(event_ids),))            return jsonify({'events': [dict(x) for x in cur.fetchall()]})
-
+            cur.execute("select * from event where event_id in %s", (tuple(event_ids),))            
+            return jsonify({'events': [dict(x) for x in cur.fetchall()]})
         return jsonify({'events': []})
 
 def get_user(user_id):
