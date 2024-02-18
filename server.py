@@ -34,10 +34,9 @@ oauth.register(
 def index():
     return render_template('index.html', pretty=json.dumps(session.get('user'), indent=4))
 
-# Specific_page is not complete yet
-@app.route('/specific_page')
-def render_specific_page():
-    return render_template('specific_page.html')
+# @app.route('/specific_page')
+# def render_specific_page():
+#     return render_template('specific_page.html')
 
 @app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
@@ -61,19 +60,37 @@ def create_event():
         print(form_data)
         database.add_event(event_type, event_name, event_location, event_date, event_description, event_image_url)
         return render_template('profile.html')
-    return render_template('create_event.html')
+    if session.get('user') is None:
+        return """
+        <html>
+            <head><title>Sign In Required</title></head>
+            <body>
+            <script>
+                alert('Please sign in to create a event.');
+                window.location = '/';
+            </script>
+            </body>
+        </html>
+        """
+    else:
+        return render_template('create_event.html')
 
 @app.route('/event/<int:event_id>')
 def event(event_id):
     event = database.get_event(event_id).get_json()['event']
+    print(event)
     if event:
-        return render_template('event.html', event=event[0])
+        return render_template('specific_page.html', event=event[0])
     else:
         return render_template('index.html')
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    user = session.get("user")
+    my_events = []
+    if not user == None:
+        my_events = database.get_user_events(user['sub']).get_json()['events']
+    return render_template('profile.html', events=my_events)
 
 @app.route('/find_events')
 def find_events():
@@ -117,6 +134,14 @@ def search():
         events = cur.fetchall() or []
     return render_template('search_results.html', events=events)
 
+@app.route('/search')
+def search():
+    query = request.args.get('query', '')
+    with get_db_cursor() as cur:
+        cur.execute("SELECT * FROM event WHERE event_name ILIKE %s ORDER BY event_date DESC", (f'%{query}%',))
+        events = cur.fetchall() or []
+    return render_template('search_results.html', events=events)
+
 # Auth0 routes
 @app.route("/login")
 def login():
@@ -127,8 +152,13 @@ def login():
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
     token = oauth.auth0.authorize_access_token()
-    session["user"] = token
-    print(token)
+    session["user"] = token['userinfo']
+    
+    user = database.get_user(token['userinfo']['sub']).get_json()
+    if user['user'] == []:
+        # add user to the database
+        auth_info = token['userinfo']
+        database.add_user(auth_info['sub'], auth_info['name'], auth_info['email'], auth_info['picture'])
     return redirect("/")
 
 @app.route("/logout")
@@ -145,10 +175,3 @@ def logout():
             quote_via=quote_plus,
         )
     )
-
-@app.route('/private')
-def private():
-    if session.get("user") is None:
-        return "private", 403
-    else:
-        return render_template('hello.html', name="private!")
