@@ -126,6 +126,10 @@
     color:black
 }
 
+.ratings span[data-clicked] ~ span{
+  color:black
+}
+
 /* card code: https://www.w3schools.com/howto/howto_css_cards.asp */
 .card {
   /* Add shadows to create the "card" effect */
@@ -154,4 +158,16 @@ body {
 
 .pure-button:hover {
   background-color: #badbe9;
+}
+
+.review-button{
+  text-align: right;
+}
+
+.review_staff{
+  margin-bottom: 1.7mm;
+}
+
+#review-cancel{
+  margin-bottom: 2cm;
 }

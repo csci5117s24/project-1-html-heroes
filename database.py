@@ -62,6 +62,11 @@ def add_user_event(user_id, event_id):
         cur.execute("INSERT INTO my_events (user_id, event_id) values (%s, %s)", (user_id, event_id))
         print(f"Added user event: {user_id}, {event_id}")
 
+def add_review(event_id, user_id, review_star, review_detail):
+    with get_db_cursor(True) as cur:
+        cur.execute("INSERT INTO reviews (event_id, user_id, review_star, review_detail) values (%s, %s, %s, %s)", (event_id, user_id, review_star, review_detail))
+        print(f"Added review: {event_id}, {user_id}, {review_star}, {review_detail}")
+
 def get_events(page = 0, events_per_page = 10):
     ''' note -- result can be used as list of dictionaries'''
     limit = events_per_page
@@ -89,3 +94,8 @@ def get_user(user_id):
     with get_db_cursor() as cur:
         cur.execute("select * from users where user_id = %s", (user_id,))
         return jsonify({'user': [dict(x) for x in cur.fetchall()]})
+
+def get_review(event_id):
+    with get_db_cursor() as cur:
+        cur.execute("select * from reviews where event_id = %s", (event_id,))
+        return jsonify({'reviews': [dict(x) for x in cur.fetchall()]})

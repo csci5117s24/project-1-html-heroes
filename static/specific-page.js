@@ -2,34 +2,40 @@
 window.onload = function() {
     stars = document.querySelectorAll(".ratings span")
     products = document.querySelectorAll(".ratings")
-    ratings(stars, products)
+    ratings_list = []; 
+    ratings(stars, ratings_list)
     fetch(products)
+    console.log(ratings_list)
 }
 
 
-// function TriggerReview() {
-//     var checkbox = document.getElementById("q4_5");
-//     console.log(checkbox)
-//     var textarea = document.getElementById("conditional_1");
-//     console.log(checkbox)
-//     textarea.style.display = checkbox.checked ? "block" : "none";
-// }
+function TriggerReview() {
+    review_gadgets = document.querySelectorAll(".review_staff")
+    // console.log(review_gadgets)
+    for(let review_gadget of review_gadgets){
+        review_gadget.setAttribute("style", "display: block;")
+    }
+}
 
-
+function HideReview() {
+    review_gadgets = document.querySelectorAll(".review_staff")
+    // console.log(review_gadgets)
+    for(let review_gadget of review_gadgets){
+        review_gadget.setAttribute("style", "display: none;")
+    }
+}
 
 //ratings system
-function ratings(stars, products){
+// A long way to go......
+function ratings(stars, ratings_list){
     ////test
     // console.log(stars)
     // console.log(products)
-    let ratings = []; //store ratings locally. I don't think the ratings has to go to the databse
 
     for(let star of stars){
         star.addEventListener("click", function(){
-
-            let children = star.parentElement.children
-
             // User can only rate one time
+            let children = star.parentElement.children
             for(let child of children){
                 if(child.getAttribute("data-clicked")){
                     return false
@@ -49,11 +55,8 @@ function ratings(stars, products){
                 "stars": rating,
                 "product-id": productId
             }
-
-            ratings.push(data);
-            
-            // store rating locally
-            localStorage.setItem("rating", JSON.stringify(ratings))            
+            ratings_list.push(data);
+            localStorage.setItem("rating", JSON.stringify(ratings_list))            
         })
     }
 }

@@ -23,6 +23,19 @@ create table my_events (
     user_id text references users(user_id) not null
 )
 
+create table reviews (
+    primary key (id, user_id, event_id),
+    id serial,
+    event_id integer references event(event_id) not null,
+    user_id text references users(user_id) not null,
+    review_star integer not null,
+    review_detail text not null
+)
+
+-- command for new review
+insert into reviews (event_id, user_id, review_star, review_detail)
+values (1, "123", 5, "awesome my friend!")
+
 -- command for new event
 insert into event (event_type, event_name, event_location, event_date, event_description, event_image_url) 
 values ('concert', 'Drake', 'US Bank', '2024-02-12 10:00:00', 'Concert with Drake', '')
@@ -47,3 +60,5 @@ select * from my_events where user_id = '123'
 -- command to get all events from list of event ids
 select * from event where event_id in (1, 2, 3)
 
+-- command to get all reivews from event id
+select * from event where event_id = 1

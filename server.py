@@ -75,12 +75,28 @@ def create_event():
     else:
         return render_template('create_event.html')
 
-@app.route('/event/<int:event_id>')
+@app.route('/event/<int:event_id>', methods=['GET', 'POST'])
 def event(event_id):
     event = database.get_event(event_id).get_json()['event']
-    print(event)
+
+    #fetch user_name based on user_id
+    reviews = database.get_review(event_id).get_json()['reviews']
+    for review in reviews:
+        user_name = database.get_user(review['user_id']).get_json()['user'][0]['user_name']
+        review['user_name'] = user_name
+
+    if request.method == 'POST':
+        print(request.form['review'], session["user"]['sub'])
+        # I set rating as 3 star temporarily since the rating system is not done.
+        database.add_review(event_id, session["user"]['sub'], 3, request.form['review'])
+        return redirect(url_for('event', event_id=event_id))
+
+    # # test
+    # print(reviews)
+    # print(event)
     if event:
-        return render_template('specific_page.html', event=event[0])
+        user = session.get('user') is not None
+        return render_template('specific_page.html', event=event[0], user=user, reviews=reviews)
     else:
         return render_template('index.html')
 
