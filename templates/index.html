@@ -11,6 +11,25 @@
                 <button class="pure-button category-button" id="month">Month</button>
                 <button class="pure-button category-button" id="all-events">All Events</button>
             </div>
+            <form class="pure-form">
+                <fieldset>
+                    <legend><h1>Looking for a specific event?</h1></legend>
+                    <input type="text" placeholder="Event name..." id="event-name" />
+                    <label for="event-date">
+                        <h2>Date</h2>
+                        <input type="date" id="event-date" />
+                    </label>
+                    <label for="group-type">
+                        <h2>Group Category</h2>
+                        <input type="text" id="group-type" />
+                    </label>
+                    <label for="group-name">
+                        <h2>Group Category</h2>
+                        <input type="text" id="group-name" />
+                    </label>
+                    <input type="button" value="Search" class="pure-button pure-button-primary" id="event-search" />
+                </fieldset>
+            </form>
             <div id="events">
             </div>
         </div>

@@ -3,11 +3,13 @@ window.onload = function() {
     weekButton = document.getElementById("week");
     monthButton = document.getElementById("month");
     allEventsButton = document.getElementById("all-events");
+    searchButton = document.getElementById("event-search");
     
     upcomingButton.addEventListener("click", () => getEvents("upcoming", upcomingButton));
     weekButton.addEventListener("click", () => getEvents("week", weekButton));
     monthButton.addEventListener("click", () => getEvents("month", monthButton));
     allEventsButton.addEventListener("click", () => getEvents("future", allEventsButton));
+    searchButton.addEventListener("click", searchEvents);
     document.getElementById("upcoming").click();
 }
 
@@ -22,7 +24,41 @@ const rootUrl = "http://localhost:5000";
 async function getEvents(type, activeButton) {
     const response = await fetch(rootUrl + "/api/events/" + type);
     const events = (await response.json()).events;
+    console.log(events)
     changeActiveButton(activeButton);
+    const upcomingEvents = [];
+    for (let i = 0; i < events.length; i++) {
+        const newEvent = createEvent(events[i]);
+        upcomingEvents.push(newEvent);
+    }
+    changeEvents(upcomingEvents);
+}
+
+function searchEvents() {
+    const eventName = document.getElementById("event-name").value;
+    const eventDate = document.getElementById("event-date").value;
+    const groupType = document.getElementById("group-type").value;
+    const groupName = document.getElementById("group-name").value;
+
+    let query = "?";
+    if (eventName != "") {
+        query += (query == "?") ? "eventName=" + eventName : "&eventName=" + eventName;
+    }
+    if (eventDate != "") {
+        query += (query == "?") ? "eventDate=" + eventDate : "&eventDate=" + eventDate;
+    }
+    if (groupType != "") {
+        query += (query == "?") ? "groupType=" + groupType : "&groupType=" + groupType;
+    }
+    if (groupName != "") {
+        query += (query == "?") ? "groupName=" + groupName : "&groupName=" + groupName;
+    }
+    filterEvents(query);
+}
+
+async function filterEvents(query) {
+    const response = await fetch(rootUrl + "/api/events" + query);
+    const events = (await response.json()).events;
     const upcomingEvents = [];
     for (let i = 0; i < events.length; i++) {
         const newEvent = createEvent(events[i]);
