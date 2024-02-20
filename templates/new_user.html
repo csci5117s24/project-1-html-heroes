@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<h1>Welcome👋</h1>
+
+<h4>Find, Create and Connect!</h4>
+<p>Event finder will help you search events going on near you.</p>
+<p>Nothing going on...don't worry, create your own event!</p>
+
+<a href="{{ url_for('index') }}" class="pure-button">Get Started</a>
+
+{% endblock %}

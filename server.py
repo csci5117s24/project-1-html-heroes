@@ -113,6 +113,10 @@ def find_events():
     events = database.get_events(0, 10).get_json()['events']
     return render_template('find_events.html', events=events)
 
+@app.route('/new_user')
+def new_user():
+    return render_template('new_user.html')
+
 ### API Endpoints
 @app.route('/api/events')
 def api_events():
@@ -151,6 +155,14 @@ def callback():
         # add user to the database
         auth_info = token['userinfo']
         database.add_user(auth_info['sub'], auth_info['name'], auth_info['email'], auth_info['picture'])
+        return redirect(url_for('new_user'))
+    else:
+        # check if user is different from the one in the database
+        user = user['user'][0]
+        if user['user_name'] != token['userinfo']['name'] or user['user_email'] != token['userinfo']['email'] or user['user_avatar'] != token['userinfo']['picture']:
+            print('updating user')
+            auth_info = token['userinfo']
+            database.add_user(auth_info['sub'], auth_info['name'], auth_info['email'], auth_info['picture'])
     return redirect("/")
 
 @app.route("/logout")
