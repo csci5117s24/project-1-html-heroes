@@ -85,7 +85,7 @@ function changeEvents(newEvents) {
 function createEvent(eventData) {
     const parser = new DOMParser();
     const newEvent = parser.parseFromString(baseEventHtml, 'text/html');
-    const eventText = eventData.event_type + " - " + eventData.event_date + "<br>" + eventData.event_location + "<br>" + eventData.event_name + "<br>" + eventData.event_description;
+    const eventText = "<h2>" + eventData.event_type + "</h2><p>" + eventData.event_date + "</p><p>" + eventData.event_location + "</p><p>" + eventData.event_name + "</p><p>" + eventData.event_description + "</p>";
     newEvent.getElementsByClassName("event-image")[0].innerHTML = "<img src=" + eventData.event_image_url + ">";
     newEvent.getElementsByClassName("event-text")[0].innerHTML = eventText;
     newEvent.getElementsByClassName("event-add")[0].innerHTML = "<p>Add event button</p>";
