@@ -112,7 +112,7 @@ def get_month_events():
         cur.execute("select * from event where event_date < (current_timestamp + (1 * interval '1 month')) and event_date > current_timestamp")
         return jsonify({'events': [dict(x) for x in cur.fetchall()]})
     
-def get_filtered_events(name, date, groupType, groupName):
+def get_filtered_events(name, date, type):
     with get_db_cursor() as cur:
         selectString = ""
         selectValues = []
@@ -129,22 +129,18 @@ def get_filtered_events(name, date, groupType, groupName):
             else:
                 selectString += "and DATE(event_date) = DATE(%s)"
             selectValues.append(date)
-        if (groupType != ""):
+        if (type != ""):
             if (selectString == ""):
-                selectString += "event_type like %s%"
+                selectString += "event_type like %s"
             else:
-                selectString += "and event_type like %s%"
-            selectValues.append(groupType)
+                selectString += "and event_type like %s"
+            selectValues.append(type + "%")
         # if (groupName != ""):
         #     if (selectString != ""):
         #         selectString += "event_name like %s"
         #     else:
         #         selectString += "and event_name like %s"
         #     selectValues.append(name)
-        print(selectString)
-        if (selectString != ""):
-            cur.execute("select * from event WHERE " + selectString, tuple(selectValues))
-        else:
-            cur.execute("select * from event")
+        cur.execute("select * from event WHERE " + selectString, tuple(selectValues))
             
         return jsonify({'events': [dict(x) for x in cur.fetchall()]})

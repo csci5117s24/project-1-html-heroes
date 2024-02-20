@@ -24,7 +24,6 @@ const rootUrl = "http://localhost:5000";
 async function getEvents(type, activeButton) {
     const response = await fetch(rootUrl + "/api/events/" + type);
     const events = (await response.json()).events;
-    console.log(events)
     changeActiveButton(activeButton);
     const upcomingEvents = [];
     for (let i = 0; i < events.length; i++) {
@@ -32,13 +31,18 @@ async function getEvents(type, activeButton) {
         upcomingEvents.push(newEvent);
     }
     changeEvents(upcomingEvents);
+
+    if (type === "future") {
+        document.getElementById("event-filter").hidden = false;
+    } else {
+        document.getElementById("event-filter").hidden = true;
+    }
 }
 
 function searchEvents() {
     const eventName = document.getElementById("event-name").value;
     const eventDate = document.getElementById("event-date").value;
-    const groupType = document.getElementById("group-type").value;
-    const groupName = document.getElementById("group-name").value;
+    const eventType = document.getElementById("event-type").value;
 
     let query = "?";
     if (eventName != "") {
@@ -47,11 +51,8 @@ function searchEvents() {
     if (eventDate != "") {
         query += (query == "?") ? "eventDate=" + eventDate : "&eventDate=" + eventDate;
     }
-    if (groupType != "") {
-        query += (query == "?") ? "groupType=" + groupType : "&groupType=" + groupType;
-    }
-    if (groupName != "") {
-        query += (query == "?") ? "groupName=" + groupName : "&groupName=" + groupName;
+    if (eventType != "") {
+        query += (query == "?") ? "eventType=" + eventType : "&eventType=" + eventType;
     }
     filterEvents(query);
 }

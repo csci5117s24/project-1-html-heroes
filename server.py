@@ -103,9 +103,8 @@ def api_events():
     if (request.args):
         name = request.args.get("eventName", "")
         date = request.args.get("eventDate", "")
-        groupType = request.args.get("groupType", "")
-        groupName = request.args.get("groupName", "")
-        return database.get_filtered_events(name, date, groupType, groupName)
+        type = request.args.get("eventType", "")
+        return database.get_filtered_events(name, date, type)
     return database.get_events()
 
 @app.route('/api/events/<int:event_id>')
