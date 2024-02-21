@@ -15,8 +15,7 @@ window.onload = function() {
 
 const baseEventHtml = "<a style=\"color: inherit; text-decoration: none;\">" +
     "<div class=\"pure-g event card container\">" +
-    "<div class=\"pure-u-1-4 event-image\"></div>" +
-    "<div class=\"pure-u-1-2 event-text l-box\"></div>" +
+    "<div class=\"event-text l-box\"></div>" +
     "<div class=\"pure-u-1-4 event-add l-box\"></div></div></a>";
 
 const rootUrl = "http://localhost:5000";
@@ -85,9 +84,16 @@ function changeEvents(newEvents) {
 function createEvent(eventData) {
     const parser = new DOMParser();
     const newEvent = parser.parseFromString(baseEventHtml, 'text/html');
-    const eventText = "<h2>" + eventData.event_type + "</h2><p>" + eventData.event_date + "</p><p>" + eventData.event_location + "</p><p>" + eventData.event_name + "</p><p>" + eventData.event_description + "</p>";
-    newEvent.getElementsByClassName("event-image")[0].innerHTML = "<img src=" + eventData.event_image_url + ">";
+    const eventText = "<h2>" + eventData.event_name + "</h2><p>" + eventData.event_date + "</p><p>" + eventData.event_location + "</p><p>" + eventData.event_type + "</p><p>" + eventData.event_description + "</p>";
+    let eventTextGrid = "pure-u-3-4";   // Used to help keep the add event button on the right side of the div
+    if (eventData.event_image_url) {
+        const imageHtml = parser.parseFromString("<div class=\"pure-u-1-4 event-image\"></div>", 'text/html');
+        imageHtml.getElementsByClassName("event-image")[0].innerHTML = "<img src=" + eventData.event_image_url + ">";
+        newEvent.prepend(imageHtml);
+        eventTextGrid = "pure-u-1-2";
+    }
     newEvent.getElementsByClassName("event-text")[0].innerHTML = eventText;
+    newEvent.getElementsByClassName("event-text")[0].classList.add(eventTextGrid);
     newEvent.getElementsByClassName("event-add")[0].innerHTML = "<p>Add event button</p>";
     newEvent.querySelector("a").setAttribute("href", rootUrl + "/event/" + eventData.event_id);
     return newEvent.documentElement.innerHTML;
