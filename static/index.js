@@ -87,9 +87,12 @@ function createEvent(eventData) {
     const eventText = "<h2>" + eventData.event_name + "</h2><p>" + eventData.event_date + "</p><p>" + eventData.event_location + "</p><p>" + eventData.event_type + "</p><p>" + eventData.event_description + "</p>";
     let eventTextGrid = "pure-u-3-4";   // Used to help keep the add event button on the right side of the div
     if (eventData.event_image_url) {
-        const imageHtml = parser.parseFromString("<div class=\"pure-u-1-4 event-image\"></div>", 'text/html');
-        imageHtml.getElementsByClassName("event-image")[0].innerHTML = "<img src=" + eventData.event_image_url + ">";
-        newEvent.prepend(imageHtml);
+        const imageDiv = document.createElement("div");
+        imageDiv.classList.add("pure-u-1-4");
+        imageDiv.classList.add("event-image");
+        imageDiv.classList.add("l-box");
+        imageDiv.innerHTML = "<img class=\"event-image\" src=" + eventData.event_image_url + ">";
+        newEvent.getElementsByClassName("event")[0].prepend(imageDiv);
         eventTextGrid = "pure-u-1-2";
     }
     newEvent.getElementsByClassName("event-text")[0].innerHTML = eventText;
