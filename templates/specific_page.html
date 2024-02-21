@@ -51,7 +51,12 @@
             <h2>About</h2>
             <p id="description">{{ event.event_description }}</p>
             {% if add_or_not == False %}
-            <button class="pure-button" id="addEvent">Add to My Schedule</button>
+                {% if by_you %}
+                    <p id = "specific-page-clue">This event is created by you.</p><br>
+                    <a class="pure-button" href="/update_event/{{event.event_id}}">Edit</a>
+                {% else %}
+                    <button class="pure-button" id="addEvent">Add to My Schedule</button>
+                {% endif %}
             {% else %}
             <p class="pure-button">You had added it</p>
             {% endif %}
