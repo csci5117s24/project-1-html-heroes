@@ -193,7 +193,19 @@ def profile():
             # print(each["parse_time"])
         # print(my_events)
         # print(created_events)
-    return render_template('profile.html', events=my_events, events2=created_events)
+        return render_template('profile.html', events=my_events, events2=created_events)
+    else:
+        return """
+        <html>
+            <head><title>Sign In Required</title></head>
+            <body>
+            <script>
+                alert('Please sign in to view your schedule.');
+                window.location = '/';
+            </script>
+            </body>
+        </html>
+        """
 
 
 @app.route('/addEvent', methods=['GET', 'POST'])
