@@ -24,15 +24,15 @@
         </br>
 
         <label for="stacked-event-description">Description</label>
-        <textarea id="stacked-event-description" name="event_description" placeholder="Description" required></textarea>
+        <textarea id="stacked-event-description" name="event_description" placeholder="Description" rows="9" cols="50" required></textarea>
         </br>
 
         <label for="stacked-event-image">Image Url</label>
-        <input type="url" id="stacked-event-image" name="event_image_url" placeholder="Image Url" />
+        <input type="url" id="stacked-event-image" name="event_image_url"  placeholder="Image Url" />
         </br>
 
         <button type="submit" class="pure-button">Create</button>
-        <a href="{{ url_for('index') }}" class="pure-button">Back</a>
+        <a href="{{ url_for('index') }}" class="pure-button">Cancel</a>
     </fieldset>
 </form>
 {% endblock %}

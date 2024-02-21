@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.profile-h2{
+  margin-top: 1cm;
+  margin-bottom: 2cm;
+}
+
 .header-button {
   /* position: relative; */
   width: 33%;
@@ -74,7 +79,7 @@
 }
 
 .delimiter {
-  border-top: 2px solid #333;
+  border-top: 2px solid #d3d3d3;
   width: 100%; 
   margin: 20px 0; 
 }
@@ -171,3 +176,47 @@ body {
 #review-cancel{
   margin-bottom: 2cm;
 }
+
+.profile-event-section{
+  margin-left: 28%;
+  margin-right: 28%;
+}
+
+.profile-event-buttons,
+.profile-event-block{
+  display: flex;
+}
+
+.profile-event-button{
+  margin-right: 2mm;
+}
+
+.event-image {
+  width: 170px; 
+  height: 196px;  
+  object-fit: cover; 
+  margin-left: 4mm;
+  margin-right: 4mm;
+}
+
+#profile-month{
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size:x-large;
+}
+
+#profile-date{
+  margin-top: 3mm;
+  font-size:x-large;
+}
+
+#profile-event-name{
+  margin-top: 0;
+}
+
+#profile-welcome{
+  font-size: 1.7cm;
+}
+
+
+

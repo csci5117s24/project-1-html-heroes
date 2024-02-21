@@ -3,6 +3,25 @@
 {% block scripts %}
     <script src="/static/specific-page.js"></script>
     <script src="/static/index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#addEvent').click(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/addEvent', 
+                    data: { "event_id": '{{event.event_id}}' }, 
+                    success: function(response){
+                        alert('Add to your schedule successfully');
+                        window.location.href = '/event/{{event.event_id}}'
+                    },
+                    error: function(){
+                        alert('Error adding data to database');
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
     
 {% block content %}
@@ -31,7 +50,11 @@
         <div class="about-block pure-u-1-2">
             <h2>About</h2>
             <p id="description">{{ event.event_description }}</p>
-            <button class="pure-button">Add to My Schedule</button>
+            {% if add_or_not == False %}
+            <button class="pure-button" id="addEvent">Add to My Schedule</button>
+            {% else %}
+            <p class="pure-button">You had added it</p>
+            {% endif %}
         </div>
     </div>
 </div>

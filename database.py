@@ -47,9 +47,9 @@ def get_db_cursor(commit=False):
       finally:
           cursor.close()
 
-def add_event(event_type, event_name, event_location, event_date, event_description, event_image_url):
+def add_event(event_type, event_name, event_location, event_date, event_description, event_image_url, user_id):
     with get_db_cursor(True) as cur:
-        cur.execute("INSERT INTO event (event_type, event_name, event_location, event_date, event_description, event_image_url) values (%s, %s, %s, %s, %s, %s)", (event_type, event_name, event_location, event_date, event_description, event_image_url))
+        cur.execute("INSERT INTO event (event_type, event_name, event_location, event_date, event_description, event_image_url, user_id) values (%s, %s, %s, %s, %s, %s, %s)", (event_type, event_name, event_location, event_date, event_description, event_image_url, user_id))
         print(f"Added event: {event_type}, {event_name}, {event_location}, {event_date}, {event_description}, {event_image_url}")
 
 def add_user(user_id, user_name, user_email, user_avatar):
@@ -99,3 +99,27 @@ def get_review(event_id):
     with get_db_cursor() as cur:
         cur.execute("select * from reviews where event_id = %s", (event_id,))
         return jsonify({'reviews': [dict(x) for x in cur.fetchall()]})
+    
+def get_user_event_id(user_id):
+    with get_db_cursor() as cur:
+        cur.execute("select * from my_events where user_id = %s", (user_id,))
+        user_events = [dict(x) for x in cur.fetchall()]
+        event_ids = [event['event_id'] for event in user_events]
+        return event_ids
+    
+def get_events_created_by_user(user_id):
+    with get_db_cursor() as cur:
+        cur.execute("select * from event where user_id = %s", (user_id,))
+        return jsonify({'event': [dict(x) for x in cur.fetchall()]})
+
+def get_events_ids_created_by_user(user_id):
+    with get_db_cursor() as cur:
+        cur.execute("select * from event where user_id = %s", (user_id,))
+        user_events = [dict(x) for x in cur.fetchall()]
+        event_ids = [event['event_id'] for event in user_events]
+        return event_ids
+    
+def update_event(event_id, event_type, event_name, event_location, event_date, event_description, event_image_url):
+    with get_db_cursor(True) as cur:
+        cur.execute("UPDATE event SET event_type = %s, event_name = %s, event_location = %s, event_date = %s, event_description = %s, event_image_url = %s WHERE event_id = %s ", (event_type, event_name, event_location, event_date, event_description, event_image_url, event_id))
+        print(f"updated user event {event_id}: {event_type}, {event_name}, {event_location}, {event_date}, {event_description}, {event_image_url}")

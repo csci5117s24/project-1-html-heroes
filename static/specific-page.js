@@ -75,4 +75,3 @@ function fetch(products){
         }
     }
 }
-

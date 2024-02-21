@@ -6,6 +6,7 @@ from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 import database
 from database import get_db_cursor
+import re
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -58,8 +59,8 @@ def create_event():
         }
 
         print(form_data)
-        database.add_event(event_type, event_name, event_location, event_date, event_description, event_image_url)
-        return render_template('profile.html')
+        database.add_event(event_type, event_name, event_location, event_date, event_description, event_image_url, session["user"]['sub'])
+        return redirect(url_for('profile'))
     if session.get('user') is None:
         return """
         <html>
@@ -74,10 +75,66 @@ def create_event():
         """
     else:
         return render_template('create_event.html')
+    
+@app.route('/update_event/<int:event_id>', methods=['GET', 'POST'])
+def update_event(event_id):
+    if request.method == 'POST':
+        event_type = request.form['event_type']
+        event_name = request.form['event_name']
+        event_location = request.form['event_location']
+        event_date = request.form['event_date']
+        event_description = request.form['event_description']
+        event_image_url = request.form['event_image_url']
+
+        form_data = {
+            "event_type": event_type,
+            "event_name": event_name,
+            "event_location": event_location,
+            "event_date": event_date,
+            "event_description": event_description,
+            "event_image_url": event_image_url
+        }
+        print(f'here is the form_data:{form_data}')
+        database.update_event(event_id, event_type, event_name, event_location, event_date, event_description, event_image_url)
+        return redirect(url_for('profile'))
+    if session.get('user') is None:
+        return """
+        <html>
+            <head><title>Sign In Required</title></head>
+            <body>
+            <script>
+                alert('Please sign in to create a event.');
+                window.location = '/';
+            </script>
+            </body>
+        </html>
+        """
+    else:
+        id_list = database.get_events_ids_created_by_user(session["user"]['sub'])
+        print(id_list)
+        add_or_not = event_id in id_list
+        if add_or_not:
+            event = database.get_event(event_id).get_json()['event']
+            print(event)
+            return render_template('update_event.html', event=event[0])
+        else:
+            return """
+            <html>
+                <head><title>Reject!</title></head>
+                <body>
+                <script>
+                    alert('This event is not created by you. You can not update it!');
+                    window.location = '/profile';
+                </script>
+                </body>
+            </html>
+            """
+
 
 @app.route('/event/<int:event_id>', methods=['GET', 'POST'])
 def event(event_id):
     event = database.get_event(event_id).get_json()['event']
+    add_or_not = event_id in database.get_user_event_id(session["user"]['sub'])
 
     #fetch user_name based on user_id
     reviews = database.get_review(event_id).get_json()['reviews']
@@ -90,13 +147,12 @@ def event(event_id):
         # I set rating as 3 star temporarily since the rating system is not done.
         database.add_review(event_id, session["user"]['sub'], 3, request.form['review'])
         return redirect(url_for('event', event_id=event_id))
-
     # # test
     # print(reviews)
     # print(event)
     if event:
         user = session.get('user') is not None
-        return render_template('specific_page.html', event=event[0], user=user, reviews=reviews)
+        return render_template('specific_page.html', event=event[0], user=user, reviews=reviews, add_or_not=add_or_not)
     else:
         return render_template('index.html')
 
@@ -104,9 +160,48 @@ def event(event_id):
 def profile():
     user = session.get("user")
     my_events = []
+    pattern = r'\w{3}, (\d{2}) (\w{3}) (\d{4}) (\d{2}:\d{2}:\d{2}) GMT'  
+
     if not user == None:
+        # Parse date, month, year and time from the string
         my_events = database.get_user_events(user['sub']).get_json()['events']
-    return render_template('profile.html', events=my_events)
+        for each in my_events:
+            match = re.search(pattern, each['event_date'])
+            date = match.group(1)  
+            month = match.group(2) 
+            year = match.group(3)  
+            time = match.group(4)
+            each["parse_time"]= {}
+            each["parse_time"]["date"]=date
+            each["parse_time"]["month"]=month  
+            each["parse_time"]["year"]=year  
+            each["parse_time"]["time"]=time
+            # print(each["parse_time"])
+    
+        created_events = database.get_events_created_by_user(user['sub']).get_json()['event']
+        for each in created_events:
+            match = re.search(pattern, each['event_date'])
+            date = match.group(1)  
+            month = match.group(2) 
+            year = match.group(3)  
+            time = match.group(4)
+            each["parse_time"]= {}
+            each["parse_time"]["date"]=date
+            each["parse_time"]["month"]=month  
+            each["parse_time"]["year"]=year  
+            each["parse_time"]["time"]=time
+            # print(each["parse_time"])
+        # print(my_events)
+        # print(created_events)
+    return render_template('profile.html', events=my_events, events2=created_events)
+
+
+@app.route('/addEvent', methods=['GET', 'POST'])
+def addEvent():
+    if request.method == 'POST':
+        event_id = request.form['event_id']
+        database.add_user_event(session["user"]['sub'], event_id)
+    return redirect(url_for('event', event_id=event_id))
 
 @app.route('/find_events')
 def find_events():
