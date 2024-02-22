@@ -294,6 +294,7 @@ body {
   flex-grow: 1;
   font-weight: bold;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .nav-buttons {
