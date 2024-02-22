@@ -137,6 +137,8 @@
 
 /* card code: https://www.w3schools.com/howto/howto_css_cards.asp */
 .card {
+  display: flex;
+  justify-content: space-between;
   background-color: #333;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -175,11 +177,27 @@
 
 .container {
   padding: 20px;
+  flex: 2;
   color: #fff;
 }
 
 .card:hover .container {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.card-image,
+.container {
+  flex: 1;
+}
+
+.card-image {
+  flex: 1;
+}
+
+.card-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 body {
