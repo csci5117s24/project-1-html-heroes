@@ -95,7 +95,7 @@ def get_user_events(user_id):
         user_events = [dict(x) for x in cur.fetchall()]
         event_ids = [event['event_id'] for event in user_events]
         if not event_ids == []:
-            cur.execute("select * from event where event_id in %s", (tuple(event_ids),))
+            cur.execute("select * from event where event_id in %s", (tuple(event_ids),))            
             return jsonify({'events': [dict(x) for x in cur.fetchall()]})
         return jsonify({'events': []})
 
@@ -144,3 +144,59 @@ def add_picture(pic, user_id):
     url = blob.public_url
 
     return url
+
+    
+
+# TODO: once duration is added, change from event_date to ending time
+def get_all_future_events():
+    with get_db_cursor() as cur:
+        cur.execute("select * from event where event_date > current_timestamp order by event_date")
+        return jsonify({'events': [dict(x) for x in cur.fetchall()]})
+    
+def get_upcoming_events():
+    with get_db_cursor() as cur:
+        cur.execute("select * from event where event_date < (current_timestamp + (2 * interval '1 day')) and event_date > current_timestamp order by event_date")
+        return jsonify({'events': [dict(x) for x in cur.fetchall()]})
+    
+def get_week_events():
+    with get_db_cursor() as cur:
+        cur.execute("select * from event where event_date < (current_timestamp + (7 * interval '1 day')) and event_date > current_timestamp order by event_date")
+        return jsonify({'events': [dict(x) for x in cur.fetchall()]})
+    
+def get_month_events():
+    with get_db_cursor() as cur:
+        cur.execute("select * from event where event_date < (current_timestamp + (1 * interval '1 month')) and event_date > current_timestamp order by event_date")
+        return jsonify({'events': [dict(x) for x in cur.fetchall()]})
+    
+def get_filtered_events(name, date, type):
+    with get_db_cursor() as cur:
+        selectString = ""
+        selectValues = []
+        if (name != ""):
+            if (selectString == ""):
+                selectString += "event_name ilike %s"
+            else:
+                selectString += "and event_name ilike %s"
+            selectValues.append("%" + name + "%")
+        if (date != ""):
+            print(date)
+            if (selectString == ""):
+                selectString += "DATE(event_date) = DATE(%s)"
+            else:
+                selectString += "and DATE(event_date) = DATE(%s)"
+            selectValues.append(date)
+        if (type != ""):
+            if (selectString == ""):
+                selectString += "event_type ilike %s"
+            else:
+                selectString += "and event_type ilike %s"
+            selectValues.append("%" + type + "%")
+        # if (groupName != ""):
+        #     if (selectString != ""):
+        #         selectString += "event_name like %s"
+        #     else:
+        #         selectString += "and event_name like %s"
+        #     selectValues.append(name)
+        cur.execute("select * from event WHERE " + selectString + " order by event_date", tuple(selectValues))
+            
+        return jsonify({'events': [dict(x) for x in cur.fetchall()]})

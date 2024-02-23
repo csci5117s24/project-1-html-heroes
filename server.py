@@ -236,6 +236,11 @@ def new_user():
 ### API Endpoints
 @app.route('/api/events')
 def api_events():
+    if (request.args):
+        name = request.args.get("eventName", "")
+        date = request.args.get("eventDate", "")
+        type = request.args.get("eventType", "")
+        return database.get_filtered_events(name, date, type)
     return database.get_events()
 
 @app.route('/api/events/<int:event_id>')
@@ -245,6 +250,30 @@ def api_event(event_id):
 @app.route('/api/users/<user_id>/events')
 def api_user_events(user_id):
     return database.get_user_events(user_id)
+
+@app.route('/api/events/future')
+def api_future_events():
+    return database.get_all_future_events()
+
+@app.route('/api/events/upcoming')
+def api_upcoming_events():
+    return database.get_upcoming_events()
+
+@app.route('/api/events/week')
+def api_week_events():
+    return database.get_week_events()
+
+@app.route('/api/events/month')
+def api_month_events():
+    return database.get_month_events()
+
+@app.route('/api/getMyEvents')
+def getMyEvents():
+    user = session.get("user")
+    my_events = []
+    if not user == None:
+        my_events = database.get_user_events(user['sub']).get_json()['events']
+    return my_events
 
 @app.route('/search')
 def search():
