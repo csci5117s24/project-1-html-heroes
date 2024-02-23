@@ -21,8 +21,9 @@
 }
 
 .event {
+  position: relative;
   height: 20em;
-  padding: 2em;
+  padding-top: 2em;
 }
 
 .event-image {
@@ -34,10 +35,15 @@
 
 .event-text {
   height: 100%;
+  clip-path: content-box;
 }
 
 .event-add {
-  height: 100%;
+  height: 50%;
+  top: 30%;
+  width: 15%;
+  right: 5%;
+  z-index: 10;
 }
 
 /* This is used to beautify the image of an event */
@@ -157,4 +163,17 @@ body {
 
 .pure-button:hover {
   background-color: #badbe9;
+}
+
+.outer-button {
+  position: absolute;
+  width: 100%;
+}
+
+.inner-button {
+  position: absolute;
+}
+
+.l-box {
+  padding-right: 1em;
 }
