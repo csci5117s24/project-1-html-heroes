@@ -131,6 +131,14 @@ def api_week_events():
 def api_month_events():
     return database.get_month_events()
 
+@app.route('/api/getMyEvents')
+def getMyEvents():
+    user = session.get("user")
+    my_events = []
+    if not user == None:
+        my_events = database.get_user_events(user['sub']).get_json()['events']
+    return my_events
+
 @app.route('/search')
 def search():
     query = request.args.get('query', '')

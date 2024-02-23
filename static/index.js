@@ -1,4 +1,16 @@
+let userEvents;
+let rootUrl;
+const baseEventHtml = "<div class=\"event\">" +
+    "<a style=\"color: inherit; text-decoration: none;\" class=\"outer-button\">" +
+    "<div class=\"event card container pure-g\">" +
+    "<img class=\"event-image l-box pure-u-1-4\">" +
+    "<div class=\"event-text l-box pure-u-1-2\"></div></div></a>" +
+    "<button class=\"pure-button event-add l-box inner-button\"></button></div>";
+
+
 window.onload = function() {
+    rootUrl = window.location.origin;
+    loadUserEvents();
     upcomingButton = document.getElementById("upcoming");
     weekButton = document.getElementById("week");
     monthButton = document.getElementById("month");
@@ -13,14 +25,15 @@ window.onload = function() {
     document.getElementById("upcoming").click();
 }
 
-const baseEventHtml = "<div class=\"event\">" +
-    "<a style=\"color: inherit; text-decoration: none;\" class=\"outer-button\">" +
-    "<div class=\"event card container pure-g\">" +
-    "<img class=\"event-image l-box pure-u-1-4\">" +
-    "<div class=\"event-text l-box pure-u-1-2\"></div></div></a>" +
-    "<button class=\"pure-button event-add l-box inner-button\"></button></div>";
-
-const rootUrl = "http://localhost:5000";
+async function loadUserEvents() {
+    const response = await fetch(rootUrl + "/api/getMyEvents");
+    const json = await response.json();
+    if (json.length === 0) {
+        userEvents = [];
+    } else {
+        userEvents = json.events;
+    }
+}
 
 async function getEvents(type, activeButton) {
     const response = await fetch(rootUrl + "/api/events/" + type);
@@ -88,9 +101,10 @@ function createEvent(eventData) {
     const newEvent = parser.parseFromString(baseEventHtml, 'text/html');
     const eventText = "<h2>" + eventData.event_name + "</h2><p>" + eventData.event_date + "</p><p>" + eventData.event_location + "</p><p>" + eventData.event_type + "</p><p>" + eventData.event_description + "</p>";
     if (eventData.event_image_url) {
-        newEvent.getElementsByClassName("event-image")[0].setAttribute(src, eventData.event_image_url);
+        newEvent.getElementsByClassName("event-image")[0].setAttribute("src", eventData.event_image_url);
     }
     newEvent.getElementsByClassName("event-text")[0].innerHTML = eventText;
+    newEvent.getElementsByClassName("event-add")[0].innerHTML = "Add event to schedule"
     newEvent.querySelector("button").setAttribute("onClick", "addToSchedule()");
     newEvent.querySelector("a").setAttribute("href", rootUrl + "/event/" + eventData.event_id);
     return newEvent.documentElement.innerHTML;
