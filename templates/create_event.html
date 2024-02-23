@@ -1,6 +1,12 @@
  {% extends 'base.html' %}
 
  {% block title %}Create{% endblock %}
+ {% block scripts %}
+    <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqUzTVg8-XI5TATyu-hi9ALyeGKRebgPo&libraries=places">
+    </script>
+    <script src="/static/create_event.js"></script>
+ {% endblock %}
 
 {% block content %}
 <h1>Create Event</h1>

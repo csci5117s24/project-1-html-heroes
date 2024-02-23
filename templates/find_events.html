@@ -1,27 +1,34 @@
- {% extends 'base.html' %}
-
-{% block title %}Explore{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}Explore{% endblock %} {% block
+content %}
 <h1>Find Events</h1>
 
 <div class="">
-    {% for event in events %}
-        <a href="{{ url_for('event', event_id=event.event_id)}}" 
-            style="color: inherit; text-decoration: none;"> <div class="card container" method="get" onclick="{{ url_for('event', event_id=event.event_id)}}">
-                <h2>{{ event.event_name }}</h2>
-                <p>{{ event.event_type }}</p>
-                <p>{{ event.event_location }}</p>
-                <p>{{ event.event_date }}</p>
-                <p>{{ event.event_description }}</p>
-                {% if event.event_image_url %}
-                    <img src="{{ event.event_image_url }}" alt="Event Image" />
-                {% endif %}
-            </div>
-        </a>
-    {% else %}
-        <p>No events found</p>
-    {% endfor %}
+  {% for event in events %}
+  <a
+    href="{{ url_for('event', event_id=event.event_id)}}"
+    style="color: inherit; text-decoration: none"
+  >
+    <div class="card">
+      <div class="card-image">
+        {% if event.event_image_url %}
+        <img src="{{ event.event_image_url }}" alt="Event Image" />
+        {% else %}
+        <img src="/static/Elon-Musk.jpeg" alt="Placeholder Image" />
+        {% endif %}
+      </div>
+
+      <div class="container">
+        <h2>{{ event.event_name }}</h2>
+        <p>{{ event.event_type }}</p>
+        <p>{{ event.event_location }}</p>
+        <p>{{ event.event_date }}</p>
+        <p>{{ event.event_description }}</p>
+      </div>
+    </div>
+  </a>
+  {% else %}
+  <p>No events found</p>
+  {% endfor %}
 </div>
 
 {% endblock %}

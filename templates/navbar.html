@@ -1,27 +1,40 @@
-<div class="pure-g">
-  <div class="pure-u-1-4"><p>Event Finder</p></div>
-  <div class="pure-u-1-2 pure-button-group" role="group">
-    <a class="pure-button header-button" href="{{ url_for('find_events')}}"
-      >Find Events</a
-    >
-    <a class="pure-button header-button" href="{{ url_for('create_event')}}"
-      >Create Event</a
-    >
-    <a class="pure-button header-button" href="{{ url_for('profile')}}"
-      >My Schedule</a
-    >
+<div class="nav_container">
+  <div class="pure-g custom-navbar">
+    <!-- Brand and Navigation Links -->
+    <div class="pure-u-1-4">
+      <a class="brand-title" href="{{ url_for('index') }}">Event Finder</a>
+    </div>
+    <div class="pure-u-1-2 pure-button-group" role="group">
+      <a class="pure-button header-button" href="{{ url_for('find_events')}}"
+        >Find Events</a
+      >
+      <a class="pure-button header-button" href="{{ url_for('create_event')}}"
+        >Create Event</a
+      >
+      <a class="pure-button header-button" href="{{ url_for('profile')}}"
+        >My Schedule</a
+      >
+    </div>
+    <div class="pure-u-1-8 user-actions">
+      {% if session.get('user') %}
+      <p><a class="user-link" href="{{ url_for('logout') }}">Log out</a></p>
+      {% else %}
+      <p><a class="user-link" href="{{ url_for('login') }}">Sign in</a></p>
+      {% endif %}
+    </div>
   </div>
-  <div class="pure-u-1-8">
-    <form action="{{ url_for('search') }}" method="get">
-      <input type="text" name="query" placeholder="Search events..." />
-      <button type="submit">Search</button>
-    </form>
-  </div>
-  <div class="pure-u-1-8">
-    {% if session.get('user') %}
-    <p><a href="{{ url_for('logout') }}">Log out</a></p>
-    {% else %}
-    <p><a href="{{ url_for('login') }}">Sign in</a></p>
-    {% endif %}
+  <!-- Separate Row for Search -->
+  <div class="pure-g">
+    <div class="pure-u-1 search-row">
+      <form action="{{ url_for('search') }}" method="get" class="search-form">
+        <input
+          class="search-input"
+          type="text"
+          name="query"
+          placeholder="Search events..."
+        />
+        <button class="search-button" type="submit">Search</button>
+      </form>
+    </div>
   </div>
 </div>
