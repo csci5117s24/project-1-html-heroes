@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Create Event</h1>
 
-<form class="pure-form pure-form-stacked" method="post" action="{{ url_for('create_event')}}">
+<form class="pure-form pure-form-stacked" method="post" action="{{ url_for('create_event')}}" enctype="multipart/form-data">
     <fieldset>
         <label for="stacked-event-type">Event Type</label>
         <input type="text" id="stacked-event-type" name="event_type" placeholder="Event Type" required />
@@ -28,7 +28,7 @@
         </br>
 
         <label for="stacked-event-image">Image Url</label>
-        <input type="url" id="stacked-event-image" name="event_image_url"  placeholder="Image Url" />
+        <input type="file" id="stacked-event-image" name="event_image">
         </br>
 
         <button type="submit" class="pure-button">Create</button>

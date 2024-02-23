@@ -17,6 +17,9 @@ from psycopg2.extras import DictCursor
 from flask import jsonify
 import datetime
 
+import firebase_admin
+from firebase_admin import credentials, storage
+
 pool = None
 
 def setup():
@@ -24,6 +27,12 @@ def setup():
     DATABASE_URL = os.environ['DATABASE_URL']
     current_app.logger.info(f"creating db connection pool")
     pool = ThreadedConnectionPool(1, 100, dsn=DATABASE_URL, sslmode='require')
+
+    cred = credentials.Certificate("firebase-admin-sdk.json")
+    firebase_admin.initialize_app(
+        cred,
+        {'storageBucket': 'eventfinder-58655.appspot.com'}
+    )
 
 
 @contextmanager
@@ -123,3 +132,15 @@ def update_event(event_id, event_type, event_name, event_location, event_date, e
     with get_db_cursor(True) as cur:
         cur.execute("UPDATE event SET event_type = %s, event_name = %s, event_location = %s, event_date = %s, event_description = %s, event_image_url = %s WHERE event_id = %s ", (event_type, event_name, event_location, event_date, event_description, event_image_url, event_id))
         print(f"updated user event {event_id}: {event_type}, {event_name}, {event_location}, {event_date}, {event_description}, {event_image_url}")
+    
+# returns the url of the image
+def add_picture(pic, user_id):
+    if user_id == None or user_id == "" or pic == None:
+        return None
+    bucket = storage.bucket()
+    blob = bucket.blob(user_id + "/" + pic.filename)
+    blob.upload_from_string(pic.read(), content_type=pic.content_type)
+    blob.make_public()
+    url = blob.public_url
+
+    return url

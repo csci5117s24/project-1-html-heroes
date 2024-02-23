@@ -10,6 +10,8 @@ gunicorn = "*"
 python-dotenv = "*"
 authlib = "*"
 requests = "*"
+google-cloud-storage = "*"
+firebase-admin = "*"
 
 [dev-packages]
 

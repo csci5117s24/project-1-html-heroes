@@ -47,7 +47,11 @@ def create_event():
         event_location = request.form['event_location']
         event_date = request.form['event_date']
         event_description = request.form['event_description']
-        event_image_url = request.form['event_image_url']
+        image = request.files['event_image']
+        if image:
+            event_image_url = database.add_picture(image, session["user"]['sub'])
+        else:
+            event_image_url = None
 
         form_data = {
             "event_type": event_type,
