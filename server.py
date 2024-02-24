@@ -226,7 +226,8 @@ def addEvent():
 
 @app.route('/find_events')
 def find_events():
-    events = database.get_events(0, 10).get_json()['events']
+    # events = database.get_events(0, 10).get_json()['events']
+    events = database.get_all_events().get_json()['events']
     return render_template('find_events.html', events=events)
 
 @app.route('/new_user')

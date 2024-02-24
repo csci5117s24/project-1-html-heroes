@@ -83,6 +83,11 @@ def get_events(page = 0, events_per_page = 10):
     with get_db_cursor() as cur:
         cur.execute("select * from event order by event_id limit %s offset %s", (limit, offset))
         return jsonify({'events': [dict(x) for x in cur.fetchall()]})
+    
+def get_all_events():
+    with get_db_cursor() as cur:
+        cur.execute("select * from event order by event_create_at ")
+        return jsonify({'events': [dict(x) for x in cur.fetchall()]})
 
 def get_event(event_id):
     with get_db_cursor() as cur:
