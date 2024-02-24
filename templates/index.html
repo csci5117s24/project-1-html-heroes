@@ -40,4 +40,11 @@
             <div id="events">
             </div>
         </div>
+        <script>
+            {% if session.get('user') %}
+                setLoginState(true);
+            {% else %}
+                setLoginState(false);
+            {% endif %}
+        </script>
 {% endblock %}

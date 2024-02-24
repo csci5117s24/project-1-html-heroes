@@ -1,5 +1,6 @@
-let userEvents;
+const userEvents = [];
 let rootUrl;
+let userLoggedIn;
 const baseEventHtml = "<div class=\"event\">" +
     "<a style=\"color: inherit; text-decoration: none;\" class=\"outer-button\">" +
     "<div class=\"event card container pure-g\">" +
@@ -25,13 +26,19 @@ window.onload = function() {
     document.getElementById("upcoming").click();
 }
 
+function setLoginState(loggedIn) {
+    if (loggedIn) {
+        userLoggedIn = true;
+    } else {
+        userLoggedIn = false;
+    }
+}
+
 async function loadUserEvents() {
     const response = await fetch(rootUrl + "/api/getMyEvents");
     const json = await response.json();
-    if (json.length === 0) {
-        userEvents = [];
-    } else {
-        userEvents = json.events;
+    for (let i = 0; i < json.length; i++) {
+        userEvents.push(json.events[i].event_id);
     }
 }
 
@@ -102,15 +109,30 @@ function createEvent(eventData) {
     const eventText = "<h2>" + eventData.event_name + "</h2><p>" + eventData.event_date + "</p><p>" + eventData.event_location + "</p><p>" + eventData.event_type + "</p><p>" + eventData.event_description + "</p>";
     if (eventData.event_image_url) {
         newEvent.getElementsByClassName("event-image")[0].setAttribute("src", eventData.event_image_url);
+    } else {
+        // TODO: add default image once we have decided on one
     }
     newEvent.getElementsByClassName("event-text")[0].innerHTML = eventText;
-    newEvent.getElementsByClassName("event-add")[0].innerHTML = "Add event to schedule"
-    newEvent.querySelector("button").setAttribute("onClick", "addToSchedule()");
+    if (userEvents.includes(eventData.event_id)) {
+        newEvent.getElementsByClassName("event-add")[0].innerHTML = "<p>Event added to schedule</p>";
+    } else {
+        newEvent.getElementsByClassName("event-add")[0].innerHTML = "<p>Add event to schedule</p>";
+        newEvent.querySelector("button").setAttribute("onClick", "addToSchedule(" + eventData.event_id + ")");
+    }
+    newEvent.querySelector("button").setAttribute("id", eventData.event_id);
     newEvent.querySelector("a").setAttribute("href", rootUrl + "/event/" + eventData.event_id);
     return newEvent.documentElement.innerHTML;
 }
 
 
-function addToSchedule() {
-    console.log("adding event to schedule")
+function addToSchedule(eventId) {
+    if (userLoggedIn) {
+        fetch(rootUrl + "/addEvent?event_id=" + eventId);
+        document.getElementById(eventId).innerHTML = "<p>Event added to schedule</p>";
+        userEvents.push(eventId);
+        // Once event has been added to schedule the button should do nothing
+        document.getElementById(eventId).setAttribute("onClick", "");
+    } else {
+        alert('Please sign in to add event to your schedule.');
+    }
 }

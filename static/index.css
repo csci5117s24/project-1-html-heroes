@@ -146,8 +146,6 @@
 
 /* card code: https://www.w3schools.com/howto/howto_css_cards.asp */
 .card {
-  display: flex;
-  justify-content: space-between;
   background-color: #333;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);

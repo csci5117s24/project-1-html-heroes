@@ -222,12 +222,17 @@ def addEvent():
     if request.method == 'POST':
         event_id = request.form['event_id']
         database.add_user_event(session["user"]['sub'], event_id)
+    elif request.args.get('event_id'):
+        event_id = request.args.get('event_id')
+        database.add_user_event(session["user"]['sub'], event_id)
+        return ('', 204)    # return without reloading page
     return redirect(url_for('event', event_id=event_id))
 
 @app.route('/find_events')
 def find_events():
-    events = database.get_events(0, 10).get_json()['events']
-    return render_template('find_events.html', events=events)
+    return render_template('index.html', pretty=json.dumps(session.get('user'), indent=4))
+    # events = database.get_events(0, 10).get_json()['events']
+    # return render_template('find_events.html', events=events)
 
 @app.route('/new_user')
 def new_user():
