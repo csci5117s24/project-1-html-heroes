@@ -36,9 +36,10 @@
         <label for="stacked-event-image">Image Url</label>
         <input type="file" id="stacked-event-image" name="event_image">
         </br>
-
-        <button type="submit" class="pure-button">Create</button>
+        <div style="text-align: center; padding: 20px;">
+        <button type="submit" class="pure-button" style="margin-right: 40px;">Create</button>
         <a href="{{ url_for('index') }}" class="pure-button">Cancel</a>
+    </div>
     </fieldset>
 </form>
 {% endblock %}

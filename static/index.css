@@ -159,6 +159,7 @@
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
 .card::after {
@@ -188,10 +189,6 @@
   color: #fff;
 }
 
-.card:hover .container {
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-}
-
 .card-image,
 .container {
   flex: 1;
@@ -213,10 +210,6 @@ body {
   background-color: rgba(34, 34, 34, 1);
 }
 
-.pure-button:hover {
-  background-color: #badbe9;
-}
-
 .review-button {
   text-align: right;
 }
@@ -428,6 +421,7 @@ h1 {
   resize: none;
 }
 
+.pure-form input[type="button"].pure-button,
 .pure-form button,
 .pure-form a.pure-button {
   background: linear-gradient(45deg, #0ff, #f0f);
@@ -444,6 +438,7 @@ h1 {
   margin: 5px;
 }
 
+.pure-form input[type="button"].pure-button:hover,
 .pure-form button:hover,
 .pure-form a.pure-button:hover {
   background: linear-gradient(45deg, rgb(97, 196, 196), rgb(171, 128, 171));
@@ -626,73 +621,6 @@ h1 {
 .search-input {
   flex-grow: 1;
   margin-right: 10px;
-}
-
-/* Create event page */
-
-h1 {
-  text-align: center;
-  color: #fff;
-}
-
-.pure-form {
-  max-width: 600px;
-  margin: 20px auto;
-  background: #333;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.pure-form label {
-  color: #fff;
-  font-weight: bold;
-}
-
-.pure-form input[type="text"],
-.pure-form input[type="datetime-local"],
-.pure-form input[type="url"],
-.pure-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: none;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  outline: none;
-}
-
-.pure-form textarea {
-  resize: none;
-}
-
-.pure-form button,
-.pure-form a.pure-button {
-  background: linear-gradient(45deg, #0ff, #f0f);
-  border: none;
-  color: #fff;
-  padding: 10px 20px;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: background 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-  margin: 5px;
-}
-
-.pure-form button:hover,
-.pure-form a.pure-button:hover {
-  background: linear-gradient(45deg, rgb(97, 196, 196), rgb(171, 128, 171));
-}
-
-.pure-form input[type="text"]:focus,
-.pure-form input[type="datetime-local"]:focus,
-.pure-form input[type="url"]:focus,
-.pure-form textarea:focus {
-  box-shadow: 0 0 10px #fff;
 }
 
 .outer-button {

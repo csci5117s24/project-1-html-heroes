@@ -1,50 +1,67 @@
- {% extends 'base.html' %}
-
- {% block title %}Home{% endblock %}
-
-{% block content %}
-        <div><p>Find events/</p></div>
-        <div class="category-div">
-            <div class="pure-button-group" role="group">
-                <button class="pure-button pure-button-active category-button" id="upcoming">Upcoming</button>
-                <button class="pure-button category-button" id="week">Week</button>
-                <button class="pure-button category-button" id="month">Month</button>
-                <button class="pure-button category-button" id="all-events">All Events</button>
-            </div>
-            <form class="pure-form" id="event-filter" hidden>
-                <fieldset>
-                    <legend><h1>Looking for a specific event?</h1></legend>
-                    <div class="pure-g">
-                        <div class="pure-u-3-8">
-                            <label for="event-name">
-                                <h2>Event Name</h2>
-                                <input class="pure-input-3-4" type="text" placeholder="Event name..." id="event-name" />
-                            </label>
-                        </div>
-                        <div class="pure-u-3-8">
-                            <label for="event-type">
-                                <h2>Event Type</h2>
-                                <input class="pure-input-3-4" placeholder="Event type..." type="text" id="event-type" />
-                            </label>
-                        </div>
-                        <div class="pure-u-1-4">
-                            <label for="event-date">
-                                <h2>Date</h2>
-                                <input class="pure-input" type="date" id="event-date" />
-                            </label>
-                        </div>
-                    </div>
-                    <input type="button" value="Search" class="pure-button pure-button-primary" id="event-search" />
-                </fieldset>
-            </form>
-            <div id="events">
-            </div>
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content
+%}
+<div><p>Find events/</p></div>
+<div class="category-div">
+  <div class="pure-button-group" role="group">
+    <button
+      class="pure-button pure-button-active category-button header-button"
+      id="upcoming"
+    >
+      Upcoming
+    </button>
+    <button class="pure-button category-button header-button" id="week">
+      Week
+    </button>
+    <button class="pure-button category-button header-button" id="month">
+      Month
+    </button>
+    <button class="pure-button category-button header-button" id="all-events">
+      All Events
+    </button>
+  </div>
+  <form class="pure-form" id="event-filter" hidden>
+    <fieldset>
+      <legend><h1>Looking for a specific event?</h1></legend>
+      <div class="pure-g">
+        <div class="pure-u-3-8">
+          <label for="event-name">
+            <h2>Event Name</h2>
+            <input
+              class="pure-input-3-4"
+              type="text"
+              placeholder="Event name..."
+              id="event-name"
+            />
+          </label>
         </div>
-        <script>
-            {% if session.get('user') %}
-                setLoginState(true);
-            {% else %}
-                setLoginState(false);
-            {% endif %}
-        </script>
+        <div class="pure-u-3-8">
+          <label for="event-type">
+            <h2>Event Type</h2>
+            <input
+              class="pure-input-3-4"
+              placeholder="Event type..."
+              type="text"
+              id="event-type"
+            />
+          </label>
+        </div>
+        <div class="pure-u-1-4">
+          <label for="event-date">
+            <h2>Date</h2>
+            <input class="pure-input" type="date" id="event-date" />
+          </label>
+        </div>
+      </div>
+      <div style="text-align: center">
+        <input
+          type="button"
+          value="Search"
+          class="pure-button pure-button-primary"
+          id="event-search"
+        />
+      </div>
+    </fieldset>
+  </form>
+  <div id="events"></div>
+</div>
 {% endblock %}
