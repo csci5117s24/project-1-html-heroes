@@ -138,12 +138,18 @@ def update_event(event_id):
 @app.route('/event/<int:event_id>', methods=['GET', 'POST'])
 def event(event_id):
     event = database.get_event(event_id).get_json()['event']
+    user = session.get("user")
+    if not user == None:
+        #check if this event is in your system or not
+        add_or_not = event_id in database.get_user_event_id(session["user"]['sub'])
+    else:
+        add_or_not = False
 
-    #check if this event is in your system or not
-    add_or_not = event_id in database.get_user_event_id(session["user"]['sub'])
-
-    #check if this event is created by you
-    by_you = event_id in database.get_events_ids_created_by_user(session["user"]['sub'])
+    if not user == None:
+        #check if this event is created by you
+        by_you = event_id in database.get_events_ids_created_by_user(session["user"]['sub'])
+    else:
+        by_you = False
 
     #fetch user_name based on user_id
     reviews = database.get_review(event_id).get_json()['reviews']
