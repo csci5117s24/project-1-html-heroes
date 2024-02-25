@@ -47,6 +47,7 @@ def create_event():
         event_location = request.form['event_location']
         event_date = request.form['event_date']
         event_description = request.form['event_description']
+        event_end = request.form['event_end']
         image = request.files['event_image']
         if image:
             event_image_url = database.add_picture(image, session["user"]['sub'])
@@ -63,7 +64,7 @@ def create_event():
         }
 
         print(form_data)
-        database.add_event(event_type, event_name, event_location, event_date, event_description, event_image_url, session["user"]['sub'])
+        database.add_event(event_type, event_name, event_location, event_date, event_description, event_image_url, event_end, session["user"]['sub'])
         return redirect(url_for('profile'))
     if session.get('user') is None:
         return """
@@ -79,7 +80,7 @@ def create_event():
         """
     else:
         return render_template('create_event.html')
-    
+
 @app.route('/update_event/<int:event_id>', methods=['GET', 'POST'])
 def update_event(event_id):
     if request.method == 'POST':
@@ -88,6 +89,7 @@ def update_event(event_id):
         event_location = request.form['event_location']
         event_date = request.form['event_date']
         event_description = request.form['event_description']
+        event_end = request.form['event_end']
         event_image_url = request.form['event_image_url']
 
         form_data = {
@@ -99,7 +101,7 @@ def update_event(event_id):
             "event_image_url": event_image_url
         }
         print(f'here is the form_data:{form_data}')
-        database.update_event(event_id, event_type, event_name, event_location, event_date, event_description, event_image_url)
+        database.update_event(event_id, event_type, event_name, event_location, event_date, event_description, event_image_url, event_end)
         return redirect(url_for('profile'))
     if session.get('user') is None:
         return """

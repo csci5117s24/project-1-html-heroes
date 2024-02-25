@@ -19,9 +19,13 @@
        <input type="text" id="stacked-event-location" name="event_location" placeholder="Location" value="{{event.event_location}}" required />
        </br>
 
-       <label for="stacked-event-time">Date and Time</label>
+       <label for="stacked-event-time">Date and Start Time</label>
        <input type="datetime-local" id="stacked-event-time" name="event_date" value="{{event.event_date}}" required />
        </br>
+
+        <label for="stacked-event-end">Date and End Time</label>
+        <input type="datetime-local" id="stacked-event-end" name="event_end" value="{{event.event_end}}" required />
+        </br>
 
        <label for="stacked-event-description">Description</label>
        <textarea id="stacked-event-description" name="event_description" placeholder="Description" rows="9" cols="50" required>{{event.event_description}}</textarea>

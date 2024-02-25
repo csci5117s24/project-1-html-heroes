@@ -126,7 +126,7 @@ function createEvent(eventData) {
     "</p>" +
     "<p style='margin-top: 5px;'>" +
     "<span>🕑&nbsp;&nbsp;</span>" +
-    eventData.event_date +
+    eventData.event_date + " - " + eventData.event_end +
     "</p><p>" +
     "<span>📍&nbsp;&nbsp;</span>" +
     eventData.event_location +

@@ -56,9 +56,9 @@ def get_db_cursor(commit=False):
       finally:
           cursor.close()
 
-def add_event(event_type, event_name, event_location, event_date, event_description, event_image_url, user_id):
+def add_event(event_type, event_name, event_location, event_date, event_description, event_image_url, user_id, event_end):
     with get_db_cursor(True) as cur:
-        cur.execute("INSERT INTO event (event_type, event_name, event_location, event_date, event_description, event_image_url, user_id) values (%s, %s, %s, %s, %s, %s, %s)", (event_type, event_name, event_location, event_date, event_description, event_image_url, user_id))
+        cur.execute("INSERT INTO event (event_type, event_name, event_location, event_date, event_description, event_image_url, user_id, event_end) values (%s, %s, %s, %s, %s, %s, %s, %s)", (event_type, event_name, event_location, event_date, event_description, event_image_url, user_id, event_end))
         print(f"Added event: {event_type}, {event_name}, {event_location}, {event_date}, {event_description}, {event_image_url}")
 
 def add_user(user_id, user_name, user_email, user_avatar):
@@ -133,9 +133,9 @@ def get_events_ids_created_by_user(user_id):
         event_ids = [event['event_id'] for event in user_events]
         return event_ids
     
-def update_event(event_id, event_type, event_name, event_location, event_date, event_description, event_image_url):
+def update_event(event_id, event_type, event_name, event_location, event_date, event_description, event_image_url, event_end):
     with get_db_cursor(True) as cur:
-        cur.execute("UPDATE event SET event_type = %s, event_name = %s, event_location = %s, event_date = %s, event_description = %s, event_image_url = %s WHERE event_id = %s ", (event_type, event_name, event_location, event_date, event_description, event_image_url, event_id))
+        cur.execute("UPDATE event SET event_type = %s, event_name = %s, event_location = %s, event_date = %s, event_description = %s, event_image_url = %s, event_end = %s WHERE event_id = %s ", (event_type, event_name, event_location, event_date, event_description, event_image_url, event_end, event_id))
         print(f"updated user event {event_id}: {event_type}, {event_name}, {event_location}, {event_date}, {event_description}, {event_image_url}")
     
 # returns the url of the image
@@ -149,8 +149,6 @@ def add_picture(pic, user_id):
     url = blob.public_url
 
     return url
-
-    
 
 # TODO: once duration is added, change from event_date to ending time
 def get_all_future_events():
