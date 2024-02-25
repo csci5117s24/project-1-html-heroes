@@ -44,10 +44,10 @@
 }
 
 .event-add {
-  height: 50%;
-  top: 30%;
+  /* height: 50%; */
+  top: 70%;
   width: 15%;
-  right: 5%;
+  right: 4%;
   z-index: 10;
 }
 
@@ -421,12 +421,13 @@ h1 {
   resize: none;
 }
 
+.pure-button.event-add.l-box.inner-button,
 .pure-form input[type="button"].pure-button,
 .pure-form button,
 .pure-form a.pure-button {
-  background: linear-gradient(45deg, #0ff, #f0f);
+  background: linear-gradient(45deg, #eeef47, #18d950);
   border: none;
-  color: #fff;
+  color: #292929;
   padding: 10px 20px;
   cursor: pointer;
   text-transform: uppercase;
@@ -438,10 +439,12 @@ h1 {
   margin: 5px;
 }
 
+.pure-button.event-add.l-box.inner-button:hover,
 .pure-form input[type="button"].pure-button:hover,
 .pure-form button:hover,
 .pure-form a.pure-button:hover {
-  background: linear-gradient(45deg, rgb(97, 196, 196), rgb(171, 128, 171));
+  background: linear-gradient(45deg, #36bbfe, #a338fe);
+  color: #fff;
 }
 
 .pure-form input[type="text"]:focus,
@@ -630,6 +633,7 @@ h1 {
 
 .inner-button {
   position: absolute;
+  white-space: normal !important;
 }
 
 .l-box {
