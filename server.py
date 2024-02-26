@@ -75,7 +75,7 @@ def create_event():
         }
 
         print(form_data)
-        database.add_event(event_type, event_name, event_location, event_date, event_description, event_image_url, event_end, session["user"]['sub'])
+        database.add_event(event_type, event_name, event_location, event_date, event_description, event_image_url, session["user"]['sub'], event_end)
         return redirect(url_for('profile'))
     if session.get('user') is None:
         return """
