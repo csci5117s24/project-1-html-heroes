@@ -30,6 +30,7 @@
     <fieldset>
       <legend><h1>Looking for a specific event?</h1></legend>
       <div class="pure-g">
+        <div class="pure-u-4-24"></div>
         <div class="pure-u-3-8">
           <label for="event-name">
             <h2>Event Name</h2>
@@ -42,6 +43,18 @@
           </label>
         </div>
         <div class="pure-u-3-8">
+          <label for="event-start">
+            <h2>From</h2>
+            <input
+              type="datetime-local"
+              id="event-start"
+            />
+          </label>
+        </div>
+      </div>
+      <div class="pure-g">
+        <div class="pure-u-4-24"></div>
+        <div class="pure-u-3-8">
           <label for="event-type">
             <h2>Event Type</h2>
             <input
@@ -52,10 +65,13 @@
             />
           </label>
         </div>
-        <div class="pure-u-1-4">
-          <label for="event-date">
-            <h2>Date</h2>
-            <input class="pure-input" type="date" id="event-date" />
+        <div class="pure-u-3-8">
+          <label for="event-end">
+            <h2>To</h2>
+            <input
+              type="datetime-local"
+              id="event-end"
+            />
           </label>
         </div>
       </div>

@@ -6,6 +6,7 @@ create table event (
     event_date timestamp not null,
     event_description text not null,
     event_image_url text null,
+    event_end timestamp,
     event_create_at timestamp default current_timestamp
 );
 

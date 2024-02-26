@@ -367,10 +367,11 @@ def new_user():
 def api_events():
     if (request.args):
         name = request.args.get("eventName", "")
-        date = request.args.get("eventDate", "")
         type = request.args.get("eventType", "")
-        return database.get_filtered_events(name, date, type)
-    return database.get_events()
+        start = request.args.get("eventStart", "")
+        end = request.args.get("eventEnd", "")
+        return database.get_filtered_events(name, type, start, end)
+    return database.get_all_future_events()
 
 @app.route('/api/events/<int:event_id>')
 def api_event(event_id):

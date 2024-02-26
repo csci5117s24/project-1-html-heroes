@@ -70,21 +70,26 @@ async function getEvents(type, activeButton) {
 
 function searchEvents() {
   const eventName = document.getElementById("event-name").value;
-  const eventDate = document.getElementById("event-date").value;
   const eventType = document.getElementById("event-type").value;
+  const eventStart = document.getElementById("event-start").value;
+  const eventEnd = document.getElementById("event-end").value;
 
   let query = "?";
   if (eventName != "") {
     query +=
       query == "?" ? "eventName=" + eventName : "&eventName=" + eventName;
   }
-  if (eventDate != "") {
-    query +=
-      query == "?" ? "eventDate=" + eventDate : "&eventDate=" + eventDate;
-  }
   if (eventType != "") {
     query +=
       query == "?" ? "eventType=" + eventType : "&eventType=" + eventType;
+  }
+  if (eventStart != "") {
+    query +=
+      query == "?" ? "eventStart=" + eventStart : "&eventStart=" + eventStart;
+  }
+  if (eventEnd != "") {
+    query +=
+      query == "?" ? "eventEnd=" + eventEnd : "&eventEnd=" + eventEnd;
   }
   filterEvents(query);
 }
@@ -165,7 +170,6 @@ function createEvent(eventData) {
 }
 
 function addToSchedule(eventId) {
-  console.log(loggedIn)
   if (loggedIn) {
     fetch(rootUrl + "/addEvent?event_id=" + eventId);
     document.getElementById(eventId).innerHTML =

@@ -391,6 +391,18 @@ h1 {
   color: #fff;
 }
 
+#event-filter {
+  max-width: 100% !important;
+}
+
+#event-filter input[type="text"] {
+  width: 75% !important;
+}
+
+#event-filter input[type="datetime-local"] {
+  width: auto !important;
+}
+
 .pure-form {
   max-width: 600px;
   margin: 20px auto;

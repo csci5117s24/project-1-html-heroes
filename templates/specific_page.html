@@ -25,12 +25,14 @@
 <div class="content-block">
   <div class="nav-div"><p>Find events/</p></div>
   <div class="image-div">{{ event.event_name }}</div>
-  <div class="event-info-div">
+  <div class="event-info-div pure-g">
     <div class="location-Date-block pure-u-1-2">
       <div class="location-block">
         <div class="location-detail">
           <h2 style="font-family: 'Rowdies', sans-serif">Location</h2>
           <p id="location">{{ event.event_location }}</p>
+          <iframe width="100%" height="450" style="border:0" loading="lazy" allowfullscreen 
+          src="https://www.google.com/maps/embed/v1/search?q={{ event.event_location }}&key=AIzaSyAqUzTVg8-XI5TATyu-hi9ALyeGKRebgPo"></iframe>
           <a
             class="pure-button specific-page-button"
             href="https://maps.google.com?q={{ event.event_location }}"
