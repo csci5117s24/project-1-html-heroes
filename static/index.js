@@ -124,10 +124,12 @@ function createEvent(eventData) {
     "<p style='background-color: #4CAF50; border-radius: 10px; display: inline-block; padding: 5px 10px; margin-top: 5px;'>" +
     eventData.event_type +
     "</p>" +
-    "<p style='margin-top: 5px;'>" +
+    "<p style='margin-top: 5px; font-weight: bold'>" +
     "<span>🕑&nbsp;&nbsp;</span>" +
-    eventData.event_date + " - " + eventData.event_end +
-    "</p><p>" +
+    eventData.event_date +
+    " - " +
+    eventData.event_end +
+    "</p><p style='font-weight: bold'>" +
     "<span>📍&nbsp;&nbsp;</span>" +
     eventData.event_location +
     "</p><p>" +
