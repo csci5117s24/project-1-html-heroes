@@ -42,7 +42,8 @@
       <div class="date-block pure-u-1-2">
         <div class="date-detail">
           <h2 style="font-family: 'Rowdies', sans-serif">Date and Time</h2>
-          <p id="date">{{ event.event_date }}</p>
+          <p id="date">Start: {{ event.event_date }}</p>
+          <p id="date1">End: {{ event.event_end }}</p>
           <a class="pure-button specific-page-button" id="google-c" onclick="addGoogleCalendar({{event.event_id}})">
             Add to Google Calender
           </a>
