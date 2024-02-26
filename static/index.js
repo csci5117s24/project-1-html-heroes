@@ -43,7 +43,7 @@ window.onload = function () {
 async function loadUserEvents() {
   const response = await fetch(rootUrl + "/api/getMyEvents");
   const json = await response.json();
-  console.log(json)
+  console.log(json);
   for (let i = 0; i < json.length; i++) {
     // userEvents.push(json.events[i].event_id);
     userEvents.push(json[i].event_id);
@@ -88,8 +88,7 @@ function searchEvents() {
       query == "?" ? "eventStart=" + eventStart : "&eventStart=" + eventStart;
   }
   if (eventEnd != "") {
-    query +=
-      query == "?" ? "eventEnd=" + eventEnd : "&eventEnd=" + eventEnd;
+    query += query == "?" ? "eventEnd=" + eventEnd : "&eventEnd=" + eventEnd;
   }
   filterEvents(query);
 }
@@ -118,7 +117,7 @@ function changeEvents(newEvents) {
     events.innerHTML += newEvents[i];
   }
   if (newEvents.length == 0) {
-    events.innerHTML = "<h1> No Events Found </h1>"
+    events.innerHTML = "<h1> No Events Found </h1>";
   }
 }
 
@@ -153,6 +152,9 @@ function createEvent(eventData) {
       .setAttribute("src", eventData.event_image_url);
   } else {
     // TODO: add default image once we have decided on one
+    newEvent
+      .getElementsByClassName("event-image")[0]
+      .setAttribute("src", "static/event-default-img-med.png");
   }
   newEvent.getElementsByClassName("event-text")[0].innerHTML = eventText;
   if (userEvents.includes(eventData.event_id)) {
@@ -189,11 +191,11 @@ async function addGoogleCalendar(eventId) {
   // console.log(eventId)
   const response = await fetch(rootUrl + "/api/google_calendar/" + eventId);
   const json = await response.json();
-  condition = json.add_or_not
+  condition = json.add_or_not;
   // console.log(json.add_or_not)
-  if(condition){
-    alert("Add successfully!!")
-  }else{
-    alert("Please sign in to add event to Google Calendar")
+  if (condition) {
+    alert("Add successfully!!");
+  } else {
+    alert("Please sign in to add event to Google Calendar");
   }
 }

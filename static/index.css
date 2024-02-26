@@ -36,6 +36,8 @@
   object-fit: cover;
   max-width: 90%;
   max-height: 100%;
+  box-shadow: 0 0 8px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 .event-text {
@@ -45,7 +47,7 @@
 
 .event-add {
   /* height: 50%; */
-  top: 70%;
+  top: 50%;
   width: 15%;
   right: 4%;
   z-index: 10;
@@ -53,12 +55,6 @@
 
 /* This is used to beautify the image of an event */
 .image-div {
-  background-image: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.1) 40%
-    ),
-    url("Elon-Musk.jpeg");
   background-size: cover;
   background-position: center;
   color: white;
@@ -73,6 +69,8 @@
   text-shadow: 2px 2px 10px #000000;
   margin-left: auto;
   margin-right: auto;
+  box-shadow: 0 0 8px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 /* .content-block {
@@ -442,9 +440,9 @@ h1 {
 .pure-form button,
 .pure-form a.pure-button,
 .review-button-1 {
-  background: linear-gradient(45deg, #eeef47, #18d950);
+  background: linear-gradient(45deg, #36bbfe, #a338fe);
   border: none;
-  color: #292929;
+  color: #fff;
   padding: 10px 20px;
   cursor: pointer;
   text-transform: uppercase;
@@ -463,8 +461,8 @@ h1 {
 .pure-form button:hover,
 .pure-form a.pure-button:hover,
 .review-button-1:hover {
-  background: linear-gradient(45deg, #36bbfe, #a338fe);
-  color: #fff;
+  background: linear-gradient(45deg, #eeef47, #18d950);
+  color: #292929;
 }
 
 .pure-form input[type="text"]:focus,
