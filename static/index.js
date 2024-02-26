@@ -117,6 +117,9 @@ function changeEvents(newEvents) {
   for (let i = 0; i < newEvents.length; i++) {
     events.innerHTML += newEvents[i];
   }
+  if (newEvents.length == 0) {
+    events.innerHTML = "<h1> No Events Found </h1>"
+  }
 }
 
 function createEvent(eventData) {
