@@ -109,6 +109,16 @@ def get_user(user_id):
         cur.execute("select * from users where user_id = %s", (user_id,))
         return jsonify({'user': [dict(x) for x in cur.fetchall()]})
 
+def get_user_token(user_id):
+    with get_db_cursor() as cur:
+        cur.execute("select token from users where user_id = %s", (user_id,))
+        return jsonify({'token': [dict(x) for x in cur.fetchall()]})
+
+def get_credential(id):
+    with get_db_cursor() as cur:
+        cur.execute("select config FROM oauth_configurations WHERE id = %s", (id,))
+        return jsonify({'credential': [dict(x) for x in cur.fetchall()]})
+
 def get_review(event_id):
     with get_db_cursor() as cur:
         cur.execute("select * from reviews where event_id = %s", (event_id,))
@@ -137,6 +147,11 @@ def update_event(event_id, event_type, event_name, event_location, event_date, e
     with get_db_cursor(True) as cur:
         cur.execute("UPDATE event SET event_type = %s, event_name = %s, event_location = %s, event_date = %s, event_description = %s, event_image_url = %s, event_end = %s WHERE event_id = %s ", (event_type, event_name, event_location, event_date, event_description, event_image_url, event_end, event_id))
         print(f"updated user event {event_id}: {event_type}, {event_name}, {event_location}, {event_date}, {event_description}, {event_image_url}")
+
+def update_token(token, user_id):
+    with get_db_cursor(True) as cur:
+        cur.execute("UPDATE users SET token = %s WHERE user_id = %s ", (token, user_id))
+        print(f"updated user {user_id} 's token {token}")
     
 # returns the url of the image
 def add_picture(pic, user_id):
@@ -203,3 +218,6 @@ def get_filtered_events(name, date, type):
         cur.execute("select * from event WHERE " + selectString + " order by event_date", tuple(selectValues))
             
         return jsonify({'events': [dict(x) for x in cur.fetchall()]})
+    
+
+

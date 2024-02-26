@@ -9,6 +9,11 @@ create table event (
     event_create_at timestamp default current_timestamp
 );
 
+CREATE TABLE oauth_configurations (
+    id SERIAL PRIMARY KEY,
+    config JSON NOT NULL
+);
+
 create table users (
     user_id text primary key,
     user_name text not null,
@@ -62,3 +67,11 @@ select * from event where event_id in (1, 2, 3)
 
 -- command to get all reivews from event id
 select * from event where event_id = 1
+
+-- command to get config
+SELECT config FROM oauth_configurations WHERE id = 1;
+
+-- command to update access token for users
+update users 
+set token = 'your_token'
+where user_id = user_id

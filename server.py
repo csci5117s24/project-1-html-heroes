@@ -7,6 +7,14 @@ from authlib.integrations.flask_client import OAuth
 import database
 from database import get_db_cursor
 import re
+from datetime import datetime
+import pytz 
+
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -33,7 +41,9 @@ oauth.register(
 
 @app.route('/')
 def index():
-    return render_template('index.html', pretty=json.dumps(session.get('user'), indent=4))
+    user = session.get('user') is not None
+    return render_template('index.html', user=user)
+    # return render_template('index.html', pretty=json.dumps(session.get('user'), indent=4))
 
 # @app.route('/specific_page')
 # def render_specific_page():
@@ -194,6 +204,7 @@ def profile():
             each["parse_time"]["year"]=year  
             each["parse_time"]["time"]=time
             # print(each["parse_time"])
+            print(each)
     
         created_events = database.get_events_created_by_user(user['sub']).get_json()['event']
         for each in created_events:
@@ -238,9 +249,132 @@ def addEvent():
 
 @app.route('/find_events')
 def find_events():
-    return render_template('index.html', pretty=json.dumps(session.get('user'), indent=4))
+    user = session.get('user') is not None
+    # return render_template('index.html', pretty=json.dumps(session.get('user'), indent=4))
+    
+    return render_template('index.html', user=user)
+    
     # events = database.get_events(0, 10).get_json()['events']
     # return render_template('find_events.html', events=events)
+
+@app.route('/api/google_calendar/<int:event_id>')
+def api_google_calendar(event_id):
+
+    # Parse start and end time
+    event1 = database.get_event(event_id).get_json()['event'][0]
+    start = event1['event_date']
+    end = event1['event_end']
+    location = event1['event_location']
+    description = event1['event_description']
+    event_name = event1['event_name']
+
+    date_format = "%a, %d %b %Y %H:%M:%S %Z"
+    parsed_date = datetime.strptime(start, date_format)
+    formatted_start = parsed_date.strftime('%Y-%m-%dT%H:%M:%S')
+    parsed_date = datetime.strptime(end, date_format)
+    formatted_end = parsed_date.strftime('%Y-%m-%dT%H:%M:%S')
+    
+    # print(start)
+    # print(formatted_start)
+    # print(end)
+    # print(formatted_end)
+
+    """Shows basic usage of the Google Calendar API.
+    """
+    user = session.get('user') is not None
+    if user:
+        token = database.get_user_token(session["user"]['sub']).get_json()['token'][0]
+        
+        # print("------")
+        # print(token)
+        # print("------")
+
+        if token == None:
+            token = {"token": "", 
+                     "refresh_token": "", 
+                     "token_uri": "", 
+                     "client_id": "", 
+                     "client_secret": "", 
+                     "scopes": ["https://www.googleapis.com/auth/calendar"], 
+                     "expiry": ""}
+        else:
+            token = token['token']
+        
+        credential = database.get_credential(1).get_json()['credential'][0]
+        credential = credential['config']
+        SCOPES = ["https://www.googleapis.com/auth/calendar"]
+        creds = None
+        creds = Credentials.from_authorized_user_info(token, SCOPES)
+
+        # If there are no (valid) credentials available, let the user log in.
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_config(
+                    credential, SCOPES
+                )
+                creds = flow.run_local_server(port=0)
+            database.update_token(creds.to_json(), session["user"]['sub'])
+        
+        # add event
+        try:
+            service = build("calendar", "v3", credentials=creds)
+            event = {
+                'summary': event_name,
+                'location': location,
+                'description': description,
+                'start': {
+                    'dateTime': formatted_start,
+                    'timeZone': 'America/Chicago',
+                },
+                'end': {
+                    'dateTime': formatted_end,
+                    'timeZone': 'America/Chicago',
+                },
+                # 'recurrence': [
+                #     'RRULE:FREQ=DAILY;COUNT=2'
+                # ],
+                # 'attendees': [
+                #     {'email': 'lpage@example.com'},
+                #     {'email': 'sbrin@example.com'},
+                # ],
+                # 'reminders': {
+                #     'useDefault': False,
+                #     'overrides': [
+                #     {'method': 'email', 'minutes': 24 * 60},
+                #     {'method': 'popup', 'minutes': 10},
+                #     ],
+                # },
+            }
+            event = service.events().insert(calendarId='primary', body=event).execute()
+            print ('Event created: %s' % (event.get('htmlLink')))
+
+        except HttpError as error:
+            print(f"An error occurred: {error}")
+        return f"""
+        <html>
+            <head><title>Add successfully</title></head>
+            <body>
+            <script>
+                alert('Add to Google Calendar successfully!');
+                window.location = '/event/{event_id}';
+            </script>
+            </body>
+        </html>
+        """
+    else:
+        return f"""
+        <html>
+            <head><title>Sign In Required</title></head>
+            <body>
+            <script>
+                alert('Please sign in to add event to Google Calender.');
+                window.location = '/event/{event_id}';
+            </script>
+            </body>
+        </html>
+        """
 
 @app.route('/new_user')
 def new_user():

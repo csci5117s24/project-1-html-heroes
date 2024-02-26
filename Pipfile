@@ -12,6 +12,10 @@ authlib = "*"
 requests = "*"
 google-cloud-storage = "*"
 firebase-admin = "*"
+google-api-python-client = "*"
+google-auth-httplib2 = "*"
+google-auth-oauthlib = "*"
+pytz = "*"
 
 [dev-packages]
 

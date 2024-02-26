@@ -11,7 +11,7 @@ const baseEventHtml =
 
 window.onload = function () {
   rootUrl = window.location.origin;
-  loadUserEvents();
+  // loadUserEvents();
   upcomingButton = document.getElementById("upcoming");
   weekButton = document.getElementById("week");
   monthButton = document.getElementById("month");
@@ -28,21 +28,25 @@ window.onload = function () {
   );
   searchButton.addEventListener("click", searchEvents);
   document.getElementById("upcoming").click();
+  loadUserEvents();
 };
 
-function setLoginState(loggedIn) {
-  if (loggedIn) {
-    userLoggedIn = true;
-  } else {
-    userLoggedIn = false;
-  }
-}
+// function setLoginState() {
+//   console.log(loggedIn);
+//   if (loggedIn) {
+//     userLoggedIn = true;
+//   } else {
+//     userLoggedIn = false;
+//   }
+// }
 
 async function loadUserEvents() {
   const response = await fetch(rootUrl + "/api/getMyEvents");
   const json = await response.json();
+  console.log(json)
   for (let i = 0; i < json.length; i++) {
-    userEvents.push(json.events[i].event_id);
+    // userEvents.push(json.events[i].event_id);
+    userEvents.push(json[i].event_id);
   }
 }
 
@@ -161,7 +165,8 @@ function createEvent(eventData) {
 }
 
 function addToSchedule(eventId) {
-  if (userLoggedIn) {
+  console.log(loggedIn)
+  if (loggedIn) {
     fetch(rootUrl + "/addEvent?event_id=" + eventId);
     document.getElementById(eventId).innerHTML =
       "<p>Event added to schedule</p>";
@@ -171,4 +176,9 @@ function addToSchedule(eventId) {
   } else {
     alert("Please sign in to add event to your schedule.");
   }
+}
+
+async function addGoogleCalendar(eventId) {
+  // console.log(eventId)
+  fetch(rootUrl + "/api/google_calendar/" + eventId);
 }

@@ -1,5 +1,12 @@
-{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content
-%}
+{% extends 'base.html' %} {% block title %}Home{% endblock %} 
+
+{% block scripts %}
+<script type="text/javascript">
+  let loggedIn = JSON.parse('{{ user | tojson | safe }}');
+</script>
+{% endblock %}
+
+{% block content %}
 <div><p>Find events/</p></div>
 <div class="category-div">
   <div class="pure-button-group" role="group">

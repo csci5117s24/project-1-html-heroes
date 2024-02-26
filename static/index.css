@@ -428,7 +428,8 @@ h1 {
 .pure-button.event-add.l-box.inner-button,
 .pure-form input[type="button"].pure-button,
 .pure-form button,
-.pure-form a.pure-button {
+.pure-form a.pure-button,
+.review-button-1 {
   background: linear-gradient(45deg, #eeef47, #18d950);
   border: none;
   color: #292929;
@@ -448,7 +449,8 @@ h1 {
 .pure-button.event-add.l-box.inner-button:hover,
 .pure-form input[type="button"].pure-button:hover,
 .pure-form button:hover,
-.pure-form a.pure-button:hover {
+.pure-form a.pure-button:hover,
+.review-button-1:hover {
   background: linear-gradient(45deg, #36bbfe, #a338fe);
   color: #fff;
 }
