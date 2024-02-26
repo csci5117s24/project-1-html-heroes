@@ -180,5 +180,13 @@ function addToSchedule(eventId) {
 
 async function addGoogleCalendar(eventId) {
   // console.log(eventId)
-  fetch(rootUrl + "/api/google_calendar/" + eventId);
+  const response = await fetch(rootUrl + "/api/google_calendar/" + eventId);
+  const json = await response.json();
+  condition = json.add_or_not
+  // console.log(json.add_or_not)
+  if(condition){
+    alert("Add successfully!!")
+  }else{
+    alert("Please sign in to add event to Google Calendar")
+  }
 }

@@ -43,7 +43,7 @@
         <div class="date-detail">
           <h2 style="font-family: 'Rowdies', sans-serif">Date and Time</h2>
           <p id="date">{{ event.event_date }}</p>
-          <a class="pure-button specific-page-button" id="google-c" href="/api/google_calendar/{{event.event_id}}">
+          <a class="pure-button specific-page-button" id="google-c" onclick="addGoogleCalendar({{event.event_id}})">
             Add to Google Calender
           </a>
         </div>

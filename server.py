@@ -9,6 +9,7 @@ from database import get_db_cursor
 import re
 from datetime import datetime
 import pytz 
+from flask import jsonify
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -352,29 +353,10 @@ def api_google_calendar(event_id):
 
         except HttpError as error:
             print(f"An error occurred: {error}")
-        return f"""
-        <html>
-            <head><title>Add successfully</title></head>
-            <body>
-            <script>
-                alert('Add to Google Calendar successfully!');
-                window.location = '/event/{event_id}';
-            </script>
-            </body>
-        </html>
-        """
+      
+        return jsonify({'add_or_not':True})
     else:
-        return f"""
-        <html>
-            <head><title>Sign In Required</title></head>
-            <body>
-            <script>
-                alert('Please sign in to add event to Google Calender.');
-                window.location = '/event/{event_id}';
-            </script>
-            </body>
-        </html>
-        """
+        return jsonify({'add_or_not':False})
 
 @app.route('/new_user')
 def new_user():
