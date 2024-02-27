@@ -6,7 +6,7 @@
 
 <h1>Update Event</h1>
 
-<form class="pure-form pure-form-stacked" method="post" action="{{event.event_id}}" enctype="multipart/form-data">
+<form class="pure-form pure-form-stacked" method="post" action="{{event.event_id}}" enctype="multipart/form-data" onsubmit="return validateTimes()">
    <fieldset>
        <label for="stacked-event-type">Event Type</label>
        <input type="text" id="stacked-event-type" name="event_type" placeholder="Event Type" value="{{event.event_type}}" required />
@@ -44,6 +44,10 @@
 {% endblock %}
 
 {% block scripts %}
+<script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqUzTVg8-XI5TATyu-hi9ALyeGKRebgPo&libraries=places">
+</script>
+
 <script>
     window.onload = () => {
         var startDate = new Date("{{event.event_date}}").toISOString().slice(0,16)
@@ -53,6 +57,23 @@
         var endDate = new Date("{{event.event_end}}").toISOString().slice(0,16)
         end = document.getElementById("stacked-event-end")
         end.setAttribute("value", endDate)
+
+        let input = document.getElementById("stacked-event-location");
+        let autocomplete = new google.maps.places.Autocomplete(input);
+    }
+</script>
+
+<script>
+    function validateTimes() {
+        var start = document.getElementById("stacked-event-time").value;
+        var end = document.getElementById("stacked-event-end").value;
+
+        if (start >= end) {
+            alert("End time must be greater than start time.");
+            return false;
+        }
+
+        return true;
     }
 </script>
 {% endblock %}
