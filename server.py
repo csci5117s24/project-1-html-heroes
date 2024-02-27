@@ -236,6 +236,18 @@ def profile():
         </html>
         """
 
+@app.route('/delete_event/<int:event_id>', methods=['POST'])
+def delete_event(event_id):
+    database.remove_event(event_id)
+    return redirect(url_for('index'))
+
+@app.route('/unfavorite_event/<int:event_id>', methods=['POST'])
+def unfavorite_event(event_id):
+    user_id = session["user"]['sub']
+    database.remove_user_event(user_id, event_id)
+    return redirect(url_for('profile'))
+
+
 
 @app.route('/addEvent', methods=['GET', 'POST'])
 def addEvent():

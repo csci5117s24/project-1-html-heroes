@@ -76,8 +76,13 @@
       <p id="description">{{ event.event_description }}</p>
       {% if add_or_not == False %} {% if by_you %}
       <p id="specific-page-clue">This event is created by you.</p>
+      <form method="post" action="{{ url_for('delete_event', event_id=event.event_id)}}" >
+        <button class="pure-button specific-page-button">
+          Delete
+        </button>
+      </form>
       <br />
-      <a class="pure-button" href="/update_event/{{event.event_id}}">Edit</a>
+      <a class="pure-button specific-page-button" href="/update_event/{{event.event_id}}">Edit</a>
       {% else %}
       <button class="pure-button specific-page-button" id="addEvent">
         Add to My Schedule

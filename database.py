@@ -61,6 +61,11 @@ def add_event(event_type, event_name, event_location, event_date, event_descript
         cur.execute("INSERT INTO event (event_type, event_name, event_location, event_date, event_description, event_image_url, user_id, event_end) values (%s, %s, %s, %s, %s, %s, %s, %s)", (event_type, event_name, event_location, event_date, event_description, event_image_url, user_id, event_end))
         print(f"Added event: {event_type}, {event_name}, {event_location}, {event_date}, {event_description}, {event_image_url}")
 
+def remove_event(event_id):
+    with get_db_cursor(True) as cur:
+        cur.execute("DELETE FROM event WHERE event_id = %s", (event_id,))
+        print(f"Deleted event: {event_id}")
+
 def add_user(user_id, user_name, user_email, user_avatar):
     with get_db_cursor(True) as cur:
         cur.execute("INSERT INTO users (user_id, user_name, user_email, user_avatar) values (%s, %s, %s, %s)", (user_id, user_name, user_email, user_avatar))
@@ -70,6 +75,11 @@ def add_user_event(user_id, event_id):
     with get_db_cursor(True) as cur:
         cur.execute("INSERT INTO my_events (user_id, event_id) values (%s, %s)", (user_id, event_id))
         print(f"Added user event: {user_id}, {event_id}")
+    
+def remove_user_event(user_id, event_id):
+    with get_db_cursor(True) as cur:
+        cur.execute("DELETE FROM my_events WHERE user_id = %s and event_id = %s", (user_id, event_id))
+        print(f"Deleted user event: {user_id}, {event_id}")
 
 def add_review(event_id, user_id, review_star, review_detail):
     with get_db_cursor(True) as cur:
