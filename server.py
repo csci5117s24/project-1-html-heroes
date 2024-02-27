@@ -294,15 +294,18 @@ def api_google_calendar(event_id):
 
     """Shows basic usage of the Google Calendar API.
     """
+    token_new={}
     user = session.get('user') is not None
     if user:
         token = database.get_user_token(session["user"]['sub']).get_json()['token'][0]
         
-        print("------")
-        print(token)
-        print("------")
+        # #test
+        # print("---1---")
+        # print(token)
+        # print("------")
 
-        if len(token) == 1:
+        if token["token"] is None:
+            # print("-----4------")
             token = {"token": "", 
                      "refresh_token": "", 
                      "token_uri": "", 
@@ -310,17 +313,46 @@ def api_google_calendar(event_id):
                      "client_secret": "", 
                      "scopes": ["https://www.googleapis.com/auth/calendar"], 
                      "expiry": ""}
+            token_new = token
         else:
-            token = token['token']
+            temp = token['token']
+
+            # #test
+            # print("---3---")
+            # print(temp)
+            # print("------")
+
+            token_new = {"token": temp['token'], 
+                     "refresh_token": temp["refresh_token"], 
+                     "token_uri": temp["token_uri"], 
+                     "client_id": temp["client_id"], 
+                     "client_secret": temp["client_secret"], 
+                     "scopes": ["https://www.googleapis.com/auth/calendar"], 
+                     "expiry": temp["expiry"]
+                     }
         
         credential = database.get_credential(1).get_json()['credential'][0]
         credential = credential['config']
-        SCOPES = ["https://www.googleapis.com/auth/calendar"]
+        
+        # # test
+        # print("---credential---")
+        # print(credential)
+        # print("------")
+        # print("--2----")
+        # print(token)
+        # print("------")
+
         creds = None
-        creds = Credentials.from_authorized_user_info(token, SCOPES)
+        SCOPES = ["https://www.googleapis.com/auth/calendar"]
+        creds = Credentials.from_authorized_user_info(token_new, SCOPES)
+
+        # #test
+        # print(creds)
+        # print(creds.valid)
 
         # If there are no (valid) credentials available, let the user log in.
         if not creds or not creds.valid:
+            print('---------no valid----------')
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
             else:
