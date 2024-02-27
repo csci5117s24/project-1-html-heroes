@@ -218,10 +218,6 @@ body {
   margin-bottom: 1.7mm;
 }
 
-#review-cancel {
-  margin-bottom: 2cm;
-}
-
 .profile-event-section {
   margin-left: 28%;
   margin-right: 28%;
@@ -492,4 +488,22 @@ h1 {
 
 .l-box {
   margin-right: 2em;
+}
+
+.review-block-3 {
+  background: linear-gradient(45deg, #97dcff, #d6a8ff);
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.author p {
+  color: #333;
+  font-weight: bold;
+}
+
+.review-description p {
+  color: #666;
+  line-height: 1.5;
 }
