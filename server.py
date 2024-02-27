@@ -298,11 +298,11 @@ def api_google_calendar(event_id):
     if user:
         token = database.get_user_token(session["user"]['sub']).get_json()['token'][0]
         
-        # print("------")
-        # print(token)
-        # print("------")
+        print("------")
+        print(token)
+        print("------")
 
-        if token == None:
+        if len(token) == 1:
             token = {"token": "", 
                      "refresh_token": "", 
                      "token_uri": "", 

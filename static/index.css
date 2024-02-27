@@ -87,7 +87,7 @@
 
 .delimiter {
   border-top: 2px solid #d3d3d3;
-  width: 100%;
+  width: 120%;
   margin: 20px 0;
 }
 
@@ -230,6 +230,7 @@ body {
 .profile-event-buttons,
 .profile-event-block {
   display: flex;
+  width: max-content;
 }
 
 .profile-event-button {
@@ -238,7 +239,6 @@ body {
 
 .event-image {
   width: 170px;
-  height: 196px;
   object-fit: cover;
   margin-left: 4mm;
   margin-right: 4mm;
@@ -257,6 +257,12 @@ body {
 
 #profile-event-name {
   margin-top: 0;
+  color: #fff;
+}
+
+#profile-event-name:hover {
+  margin-top: 0;
+  color: #3faefd;
 }
 
 #profile-welcome {
@@ -433,6 +439,7 @@ h1 {
   resize: none;
 }
 
+.pure-button.profile-event-button,
 .pure-button.review_staff,
 .pure-button.specific-page-button,
 .pure-button.event-add.l-box.inner-button,
@@ -454,6 +461,7 @@ h1 {
   margin: 5px;
 }
 
+.pure-button.profile-event-button:hover,
 .pure-button.review_staff:hover,
 .pure-button.specific-page-button:hover,
 .pure-button.event-add.l-box.inner-button:hover,
@@ -483,5 +491,5 @@ h1 {
 }
 
 .l-box {
-  padding-right: 1em;
+  margin-right: 2em;
 }

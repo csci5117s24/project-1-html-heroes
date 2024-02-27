@@ -30,7 +30,7 @@
     to top,
     rgba(0, 0, 0, 0.7) 0%,
     rgba(0, 0, 0, 0.1) 40%
-  ), url('{{ event.event_image_url or url_for('static', filename='/default_img2.png') }}');"
+  ), url('{{ event.event_image_url or url_for('static', filename='/event-default-img-med.png') }}');"
   >
     {{ event.event_name }}
   </div>
@@ -38,7 +38,7 @@
     <div class="location-Date-block pure-u-1-2">
       <div class="location-block">
         <div class="location-detail">
-          <h2 style="font-family: 'Rowdies', sans-serif">Location</h2>
+          <h2 style="font-family: 'Chakra Petch', sans-serif">Location</h2>
           <p id="location">{{ event.event_location }}</p>
           <iframe
             width="100%"
@@ -58,7 +58,7 @@
       </div>
       <div class="date-block pure-u-1-2">
         <div class="date-detail">
-          <h2 style="font-family: 'Rowdies', sans-serif">Date and Time</h2>
+          <h2 style="font-family: 'Chakra Petch', sans-serif">Date and Time</h2>
           <p id="date">Start: {{ event.event_date }}</p>
           <p id="date1">End: {{ event.event_end }}</p>
           <a
@@ -72,7 +72,7 @@
       </div>
     </div>
     <div class="about-block pure-u-1-2">
-      <h2 style="font-family: 'Rowdies', sans-serif">About</h2>
+      <h2 style="font-family: 'Chakra Petch', sans-serif">About</h2>
       <p id="description">{{ event.event_description }}</p>
       {% if add_or_not == False %} {% if by_you %}
       <p id="specific-page-clue">This event is created by you.</p>
@@ -88,7 +88,9 @@
         Add to My Schedule
       </button>
       {% endif %} {% else %}
-      <p class="pure-button specific-page-button">You had added it</p>
+      <form action="{{ url_for('unfavorite_event', event_id=event.event_id) }}" method="post">
+        <button class="pure-button specific-page-button">Unfavorite</button>
+      </form>
       {% endif %}
     </div>
   </div>
@@ -96,7 +98,7 @@
 <div class="delimiter"></div>
 <div class="review-block">
   <div class="review-block-1 pure-u-1-2">
-    <h2>Reviews</h2>
+    <h2 style="font-family: 'Chakra Petch', sans-serif">Reviews</h2>
     <div class="review-block-2">
       <form action="/event/{{event.event_id}}" method="post">
         <textarea

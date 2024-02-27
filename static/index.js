@@ -129,10 +129,10 @@ function createEvent(eventData) {
       ? eventData.event_description.substring(0, 150) + "..."
       : eventData.event_description;
   const eventText =
-    "<h2 style='font-family:&quot;Rowdies&quot;, sans-serif; margin-bottom: 5px;'>" +
+    "<h2 style='font-family:&quot;Chakra Petch&quot;, sans-serif; margin-bottom: 5px; font-size:36px'>" +
     eventData.event_name +
     "</h2>" +
-    "<p style='background-color: #4CAF50; border-radius: 10px; display: inline-block; padding: 5px 10px; margin-top: 5px;'>" +
+    "<p style='background-color: #18d950; border-radius: 10px; display: inline-block; padding: 5px 10px; margin-top: 5px;'>" +
     eventData.event_type +
     "</p>" +
     "<p style='margin-top: 5px; font-weight: bold'>" +
@@ -143,7 +143,7 @@ function createEvent(eventData) {
     "</p><p style='font-weight: bold'>" +
     "<span>📍&nbsp;&nbsp;</span>" +
     eventData.event_location +
-    "</p><p>" +
+    "</p><p style='font-family:&quot;Chakra Petch&quot;, sans-serif;'>" +
     eventDescription +
     "</p>";
   if (eventData.event_image_url) {
