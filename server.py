@@ -101,7 +101,11 @@ def update_event(event_id):
         event_date = request.form['event_date']
         event_description = request.form['event_description']
         event_end = request.form['event_end']
-        event_image_url = request.form['event_image_url']
+        event_image_url = request.files['event_image_url']
+        if event_image_url:
+            event_image_url = database.add_picture(event_image_url, session["user"]['sub'])
+        else:
+            event_image_url = None
 
         form_data = {
             "event_type": event_type,

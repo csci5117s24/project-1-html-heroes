@@ -3,9 +3,10 @@
 {% block title %}Update{% endblock %}
 
 {% block content %}
+
 <h1>Update Event</h1>
 
-<form class="pure-form pure-form-stacked" method="post" action="{{event.event_id}}">
+<form class="pure-form pure-form-stacked" method="post" action="{{event.event_id}}" enctype="multipart/form-data">
    <fieldset>
        <label for="stacked-event-type">Event Type</label>
        <input type="text" id="stacked-event-type" name="event_type" placeholder="Event Type" value="{{event.event_type}}" required />
@@ -20,11 +21,11 @@
        </br>
 
        <label for="stacked-event-time">Date and Start Time</label>
-       <input type="datetime-local" id="stacked-event-time" name="event_date" value="{{event.event_date}}" required />
+       <input type="datetime-local" id="stacked-event-time" name="event_date" required />
        </br>
 
         <label for="stacked-event-end">Date and End Time</label>
-        <input type="datetime-local" id="stacked-event-end" name="event_end" value="{{event.event_end}}" required />
+        <input type="datetime-local" id="stacked-event-end" name="event_end" required />
         </br>
 
        <label for="stacked-event-description">Description</label>
@@ -32,11 +33,26 @@
        </br>
 
        <label for="stacked-event-image">Image Url</label>
-       <input type="url" id="stacked-event-image" name="event_image_url" value="{{event.event_image_url}}" placeholder="Image Url" />
+       <input type="file" id="stacked-event-image" name="event_image_url" value="{{event.event_image_url}}" placeholder="Image Url">
+
        </br>
 
        <button type="submit" class="pure-button">Update</button>
        <a href="{{ url_for('profile') }}" class="pure-button">Cancel</a>
    </fieldset>
 </form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.onload = () => {
+        var startDate = new Date("{{event.event_date}}").toISOString().slice(0,16)
+        start = document.getElementById("stacked-event-time")
+        start.setAttribute("value", startDate)
+
+        var endDate = new Date("{{event.event_end}}").toISOString().slice(0,16)
+        end = document.getElementById("stacked-event-end")
+        end.setAttribute("value", endDate)
+    }
+</script>
 {% endblock %}
