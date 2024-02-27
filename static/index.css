@@ -469,6 +469,18 @@ h1 {
   color: #292929;
 }
 
+.pure-button.profile-event-button:focus,
+.pure-button.review_staff:focus,
+.pure-button.specific-page-button:focus,
+.pure-button.event-add.l-box.inner-button:focus,
+.pure-form input[type="button"].pure-button:focus,
+.pure-form button:hover,
+.pure-form a.pure-button:hover,
+.review-button-1:hover {
+  background: linear-gradient(45deg, #36bbfe, #a338fe);
+  color: #fff;
+}
+
 .pure-form input[type="text"]:focus,
 .pure-form input[type="datetime-local"]:focus,
 .pure-form input[type="url"]:focus,
