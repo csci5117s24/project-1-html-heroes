@@ -239,7 +239,6 @@ body {
 
 .event-image {
   width: 170px;
-  height: 196px;
   object-fit: cover;
   margin-left: 4mm;
   margin-right: 4mm;
@@ -258,6 +257,12 @@ body {
 
 #profile-event-name {
   margin-top: 0;
+  color: #fff;
+}
+
+#profile-event-name:hover {
+  margin-top: 0;
+  color: #3faefd;
 }
 
 #profile-welcome {
@@ -486,5 +491,5 @@ h1 {
 }
 
 .l-box {
-  padding-right: 1em;
+  margin-right: 2em;
 }

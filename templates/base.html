@@ -29,14 +29,20 @@
   rel="stylesheet"
 />
 
+<link
+  href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+  rel="stylesheet"
+/>
+
 {% block scripts %}{% endblock %}
 
 <section class="">
   {% include "navbar.html" %}
 
-  <div class="" style="height: 100vh;">
-    <div class="" style="padding: 0 20px;">{% block content %}{% endblock %}</div>
+  <div class="" style="height: 100vh">
+    <div class="" style="padding: 0 20px">
+      {% block content %}{% endblock %}
+    </div>
     {% include "footer.html" %}
   </div>
-
 </section>

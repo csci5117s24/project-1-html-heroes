@@ -1,41 +1,55 @@
-{% extends 'base.html' %}
-
-{% block title %}Profile{% endblock %}
-
-{% block content %}
-
-{% if session['user'] %}
+{% extends 'base.html' %} {% block title %}Profile{% endblock %} {% block
+content %} {% if session['user'] %}
 <div class="profile-info">
-    <h1 id="profile-welcome">Hi there, {{session['user']['name']}}</h1>
+  <h1
+    id="profile-welcome"
+    style="
+      font-family: 'Bungee Shade', sans-serif;
+      background: linear-gradient(45deg, #36bbfe, #a338fe);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    "
+  >
+    Hi there, {{session['user']['name']}}
+  </h1>
 </div>
 <div class="profile-event-section">
-    <div class="event-section1">
-        <h2 class="profile-h2">Here, you can view the event created by other people</h2>
-        {% for event in events %}
-            <div class="profile-event-block">
-                <div class="profile-event-date">
-                    <p id="profile-month">{{event.parse_time.month}}</p>
-                    <p id="profile-date"><b>{{event.parse_time.date}}</b></p>
-                </div>
-                <div class="profile-event-image">
-                    <img src="../static/Elon-Musk.jpeg" alt="Elon-Musk" class="event-image" >
-                </div>
-                <div class="profile-event-info">
-                    <a href="{{ url_for('event', event_id=event.event_id)}}">
-                        <h3 id="profile-event-name">{{ event.event_name }}</h3>
-                    </a>
-                    <p>{{ event.event_type }}</p>
-                    <p>{{ event.event_location }}</p>
-                    <p>{{event.parse_time.time}} {{event.parse_time.year}}</p>
-                    <div class="profile-event-buttons">
-                        <button class="pure-button profile-event-button">Google Map</button>
-                        <button class="pure-button profile-event-button">Google calendar</button>
-                        <button class="pure-button profile-event-button">Delete</button>
-                    </div>
-                </div>
-            </div>
-            <div class="delimiter"></div>
-            <!-- <a href="{{ url_for('event', event_id=event.event_id)}}" 
+  <div class="event-section1">
+    <h2 class="profile-h2">
+      Here, you can view the event created by other people
+    </h2>
+    {% for event in events %}
+    <div class="profile-event-block">
+      <div class="profile-event-date">
+        <p id="profile-month">{{event.parse_time.month}}</p>
+        <p id="profile-date"><b>{{event.parse_time.date}}</b></p>
+      </div>
+      <div class="profile-event-image">
+        <img
+          src="{{ event.event_image_url or url_for('static', filename='event-default-img-med.png') }}"
+          alt="Elon-Musk"
+          class="event-image"
+        />
+      </div>
+      <div class="profile-event-info">
+        <a href="{{ url_for('event', event_id=event.event_id)}}">
+          <h3 id="profile-event-name">{{ event.event_name }}</h3>
+        </a>
+        <p>{{ event.event_type }}</p>
+        <p>{{ event.event_location }}</p>
+        <p>{{event.parse_time.time}} {{event.parse_time.year}}</p>
+        <div class="profile-event-buttons">
+          <button class="pure-button profile-event-button">Google Map</button>
+          <button class="pure-button profile-event-button">
+            Google calendar
+          </button>
+          <button class="pure-button profile-event-button">Delete</button>
+        </div>
+      </div>
+    </div>
+    <div class="delimiter"></div>
+    <!-- <a href="{{ url_for('event', event_id=event.event_id)}}" 
                 style="color: inherit; text-decoration: none;"> <div class="card container" method="get" onclick="{{ url_for('event', event_id=event.event_id)}}">
                     <h2>{{ event.event_name }}</h2>
                     <p>{{ event.event_type }}</p>
@@ -47,44 +61,55 @@
                     {% endif %}
                 </div>
             </a> -->
-        {% else %}
-            <p>No events found</p>
-        {% endfor %}
+    {% else %}
+    <p>No events found</p>
+    {% endfor %}
+  </div>
+  <div class="event-section2">
+    <h2 class="profile-h2">
+      Here, you can view and edit the event that you created
+    </h2>
+    {% for event in events2 %}
+    <div class="profile-event-block">
+      <div class="profile-event-date">
+        <p id="profile-month">{{event.parse_time.month}}</p>
+        <p id="profile-date"><b>{{event.parse_time.date}}</b></p>
+      </div>
+      <div class="profile-event-image">
+        <img
+          src="../static/Elon-Musk.jpeg"
+          alt="Elon-Musk"
+          class="event-image"
+        />
+      </div>
+      <div class="profile-event-info">
+        <a href="{{ url_for('event', event_id=event.event_id)}}">
+          <h3 id="profile-event-name">{{ event.event_name }}</h3>
+        </a>
+        <p>{{ event.event_type }}</p>
+        <p id="profile-location">{{ event.event_location }}</p>
+        <p>{{event.parse_time.time}} {{event.parse_time.year}}</p>
+        <div class="profile-event-buttons">
+          <button class="pure-button profile-event-button">Google Map</button>
+          <button class="pure-button profile-event-button">
+            Google calendar
+          </button>
+          <a
+            class="pure-button profile-event-button"
+            href="/update_event/{{event.event_id}}"
+            >Edit</a
+          >
+          <button class="pure-button profile-event-button">Delete</button>
+        </div>
+      </div>
     </div>
-    <div class="event-section2">
-        <h2 class="profile-h2">Here, you can view and edit the event that you created</h2>
-        {% for event in events2 %}
-            <div class="profile-event-block">
-                <div class="profile-event-date">
-                    <p id="profile-month">{{event.parse_time.month}}</p>
-                    <p id="profile-date"><b>{{event.parse_time.date}}</b></p>
-                </div>
-                <div class="profile-event-image">
-                    <img src="../static/Elon-Musk.jpeg" alt="Elon-Musk" class="event-image" >
-                </div>
-                <div class="profile-event-info">
-                    <a href="{{ url_for('event', event_id=event.event_id)}}">
-                        <h3 id="profile-event-name">{{ event.event_name }}</h3>
-                    </a>
-                    <p>{{ event.event_type }}</p>
-                    <p id = "profile-location">{{ event.event_location }}</p>
-                    <p>{{event.parse_time.time}} {{event.parse_time.year}}</p>
-                    <div class="profile-event-buttons">
-                        <button class="pure-button profile-event-button">Google Map</button>
-                        <button class="pure-button profile-event-button">Google calendar</button>
-                        <a class="pure-button profile-event-button" href="/update_event/{{event.event_id}}">Edit</a>
-                        <button class="pure-button profile-event-button">Delete</button>
-                    </div>
-                </div>
-            </div>
-            <div class="delimiter"></div>
-        {% else %}
-            <p>No events found is created by you</p>
-        {% endfor %}
-    </div>
+    <div class="delimiter"></div>
+    {% else %}
+    <p>No events found is created by you</p>
+    {% endfor %}
+  </div>
 </div>
 
 {% else %}
 <h1>You need to create an account to add events</h1>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}
