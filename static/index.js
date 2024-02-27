@@ -1,6 +1,5 @@
 const userEvents = [];
 let rootUrl;
-let userLoggedIn;
 const baseEventHtml =
   '<div class="event">' +
   '<a style="color: inherit; text-decoration: none;" class="outer-button">' +
@@ -11,7 +10,7 @@ const baseEventHtml =
 
 window.onload = function () {
   rootUrl = window.location.origin;
-  // loadUserEvents();
+  loadUserEvents();
   upcomingButton = document.getElementById("upcoming");
   weekButton = document.getElementById("week");
   monthButton = document.getElementById("month");
@@ -31,21 +30,11 @@ window.onload = function () {
   loadUserEvents();
 };
 
-// function setLoginState() {
-//   console.log(loggedIn);
-//   if (loggedIn) {
-//     userLoggedIn = true;
-//   } else {
-//     userLoggedIn = false;
-//   }
-// }
-
 async function loadUserEvents() {
   const response = await fetch(rootUrl + "/api/getMyEvents");
   const json = await response.json();
   console.log(json);
   for (let i = 0; i < json.length; i++) {
-    // userEvents.push(json.events[i].event_id);
     userEvents.push(json[i].event_id);
   }
 }
