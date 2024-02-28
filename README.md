@@ -40,18 +40,31 @@ along with a very brief caption:**
 ![](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
 
 ### Landing Page
+This is the page that you can find the event by using the filter "upcoming", "week", "month", and a more concrete filter with event type, event date and event name.
 ![](/mock-up/demo/Landing%20page.png "landing page")
 
 ### A Specific Page (created by users themselves)
+* Check location, time and info about the event.
+* View location with Google Map
+* Edit the event
+* Delete the event
+* Comment the event
 ![](/mock-up/demo/My%20event%20page.png "A Specific Page")
 
 ### A Specific Page (created by other users)
+* Check location, time and info about the event.
+* View location with Google Map
+* Add event into Google Calendar
+* Comment the event
 ![](/mock-up/demo/other%20people's%20event%20page.png "A Specific Page")
 
 ### Create Event Page (created by other users)
+* create you own event
 ![](/mock-up/demo/Landing%20page.png "Create Event Page")
 
 ### My Profile Page
+* Check events created by you and other people
+* Unfavorite an event  
 ![](/mock-up/demo/My%20profile.png "My Profile Page")
 
 
