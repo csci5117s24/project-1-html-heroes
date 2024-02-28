@@ -22,8 +22,8 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* Search filtering system. Filter the events by "upcoming", "week", "month" or "all events"
-* Google Calendar. Add the event into Google Calendar using its API.
+* **Search filtering system**. Filter the events by "upcoming", "week", "month" or "all events"
+* **Google Calendar**. Add the event into Google Calendar using its API.
 
 ## Testing Notes
 
@@ -66,8 +66,7 @@ Please try this link more than one time since at the first time you might not su
 **Document integrations with 3rd Party code or services here.
 Please do not document required libraries. or libraries that are mentioned in the product requirements**
 
-* Library or service name: description of use
-* Google Map API & Google Calender API: use them for rendering location page and add event to Google Calendar
+* **Google Map API & Google Calender API**: use them for rendering location page and add event to Google Calendar
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
