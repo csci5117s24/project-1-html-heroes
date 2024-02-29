@@ -60,7 +60,7 @@ This is the page that you can find the event by using the filter "upcoming", "we
 
 ### Create Event Page (created by other users)
 * create you own event
-![](/mock-up/demo/Landing%20page.png "Create Event Page")
+![](/mock-up/demo/create%20event.png "Create Event Page")
 
 ### My Profile Page
 * Check events created by you and other people
